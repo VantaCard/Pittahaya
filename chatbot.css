@@ -1,0 +1,381 @@
+/* =========================
+   Pitahaya Secure Reception Chat
+   ========================= */
+
+.pitahaya-chat{
+  position:fixed;
+  right:18px;
+  bottom:18px;
+  z-index:9999;
+  font-family:"Manrope","Space Grotesk","Plus Jakarta Sans",system-ui,-apple-system,Segoe UI,sans-serif;
+  color:#fff8ec;
+}
+
+.pitahaya-chat *{box-sizing:border-box}
+
+.demo-footer{
+  padding-bottom:clamp(28px, 4vw, 46px) !important;
+}
+
+.demo-footer-brand{
+  display:inline-grid;
+  grid-template-columns:auto auto;
+  grid-template-rows:auto auto;
+  align-items:center;
+  gap:2px 10px;
+  color:inherit;
+}
+
+.demo-footer-brand img{
+  grid-row:1 / 3;
+  width:46px;
+  height:46px;
+  object-fit:contain;
+  filter:drop-shadow(0 12px 28px rgba(232,52,135,.22));
+}
+
+.demo-footer-brand span{
+  color:currentColor;
+  opacity:.58;
+  font-size:11px;
+  letter-spacing:.11em;
+  text-transform:uppercase;
+}
+
+.demo-footer-brand strong{
+  color:currentColor;
+  opacity:.94;
+  font-size:15px;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+}
+
+.demo-footer .navLinks,
+.demo-footer .navlinks{
+  align-items:center;
+}
+
+@media (min-width:621px){
+  .demo-footer .navLinks,
+  .demo-footer .navlinks{
+    padding-right:86px;
+  }
+}
+
+.demo-tilt.is-demo-tilting{
+  transform:perspective(1000px) translateY(-4px) rotateX(var(--tilt-y, 0deg)) rotateY(var(--tilt-x, 0deg)) !important;
+  border-color:rgba(232,52,135,.28) !important;
+  box-shadow:0 28px 90px rgba(0,0,0,.28), 0 0 46px rgba(232,52,135,.10);
+}
+
+.demo-corner-logo{
+  display:none !important;
+}
+
+.pitahaya-chat__launcher{
+  width:58px;
+  min-width:58px;
+  min-height:58px;
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:999px;
+  color:#10100d;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255,255,255,.65), transparent 34%),
+    linear-gradient(135deg,#f7d990,#e83487);
+  box-shadow:0 22px 70px rgba(0,0,0,.36), 0 0 0 8px rgba(230,191,116,.08);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:0;
+  padding:0;
+  font-weight:800;
+  cursor:pointer;
+  overflow:hidden;
+  transition:transform .18s ease, box-shadow .18s ease, width .22s ease, min-width .22s ease, padding .22s ease, gap .22s ease;
+}
+
+.pitahaya-chat__launcher span:not(.pitahaya-chat__spark){
+  max-width:0;
+  opacity:0;
+  overflow:hidden;
+  white-space:nowrap;
+  transition:max-width .22s ease, opacity .18s ease;
+}
+
+.pitahaya-chat__launcher:hover,
+.pitahaya-chat__launcher:focus-visible{
+  width:214px;
+  min-width:214px;
+  gap:10px;
+  padding:12px 16px;
+  transform:translateY(-2px);
+  box-shadow:0 26px 90px rgba(0,0,0,.44), 0 0 0 10px rgba(232,52,135,.08);
+}
+
+.pitahaya-chat__launcher:hover span:not(.pitahaya-chat__spark),
+.pitahaya-chat__launcher:focus-visible span:not(.pitahaya-chat__spark){
+  max-width:160px;
+  opacity:1;
+}
+
+.pitahaya-chat__spark{
+  width:11px;
+  height:11px;
+  border-radius:50%;
+  background:#0c1512;
+  box-shadow:0 0 0 6px rgba(12,21,18,.10);
+}
+
+.pitahaya-chat__panel{
+  width:min(410px, calc(100vw - 24px));
+  max-height:min(680px, calc(100vh - 34px));
+  display:none;
+  overflow:hidden;
+  border-radius:28px;
+  border:1px solid rgba(255,255,255,.14);
+  background:
+    radial-gradient(520px 280px at 0% 0%, rgba(230,191,116,.18), transparent 62%),
+    radial-gradient(480px 260px at 100% 0%, rgba(232,52,135,.13), transparent 60%),
+    rgba(8,10,14,.94);
+  box-shadow:0 34px 120px rgba(0,0,0,.58);
+  backdrop-filter:blur(18px);
+}
+
+.pitahaya-chat.is-open .pitahaya-chat__launcher{display:none}
+.pitahaya-chat.is-open .pitahaya-chat__panel{display:block}
+
+.pitahaya-chat__header{
+  padding:16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  border-bottom:1px solid rgba(255,255,255,.10);
+}
+
+.pitahaya-chat__identity{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  min-width:0;
+}
+
+.pitahaya-chat__avatar{
+  width:54px;
+  height:54px;
+  border-radius:0;
+  object-fit:contain;
+  background:transparent;
+  border:0;
+  box-shadow:none;
+  flex:0 0 auto;
+}
+
+.pitahaya-chat__title{
+  display:block;
+  font-size:14px;
+  font-weight:850;
+  letter-spacing:.02em;
+}
+
+.pitahaya-chat__status{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  margin-top:3px;
+  color:rgba(255,248,236,.66);
+  font-size:12px;
+}
+
+.pitahaya-chat__status:before{
+  content:"";
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#e83487;
+  box-shadow:0 0 18px rgba(232,52,135,.8);
+}
+
+.pitahaya-chat__close{
+  width:40px;
+  height:40px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.05);
+  color:rgba(255,248,236,.9);
+  cursor:pointer;
+}
+
+.pitahaya-chat__messages{
+  height:350px;
+  overflow:auto;
+  padding:16px;
+  scroll-behavior:smooth;
+}
+
+.pitahaya-chat__messages::-webkit-scrollbar{width:8px}
+.pitahaya-chat__messages::-webkit-scrollbar-thumb{background:rgba(255,255,255,.16);border-radius:999px}
+
+.pitahaya-chat__message{
+  display:grid;
+  gap:8px;
+  margin:0 0 12px;
+}
+
+.pitahaya-chat__bubble{
+  max-width:92%;
+  padding:12px 13px;
+  border-radius:18px;
+  line-height:1.55;
+  font-size:13px;
+  border:1px solid rgba(255,255,255,.10);
+}
+
+.pitahaya-chat__message--bot .pitahaya-chat__bubble{
+  background:rgba(255,255,255,.06);
+  color:rgba(255,248,236,.90);
+  border-top-left-radius:7px;
+}
+
+.pitahaya-chat__message--user{
+  justify-items:end;
+}
+
+.pitahaya-chat__message--user .pitahaya-chat__bubble{
+  background:linear-gradient(135deg, rgba(230,191,116,.92), rgba(232,52,135,.82));
+  color:#09100e;
+  border-color:rgba(255,255,255,.20);
+  border-top-right-radius:7px;
+}
+
+.pitahaya-chat__actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+
+.pitahaya-chat__action{
+  border:1px solid rgba(230,191,116,.24);
+  border-radius:999px;
+  padding:8px 10px;
+  background:rgba(230,191,116,.08);
+  color:rgba(255,248,236,.88);
+  font-size:12px;
+  font-weight:700;
+  cursor:pointer;
+  text-decoration:none;
+  transition:transform .18s ease, background .18s ease, border-color .18s ease;
+}
+
+.pitahaya-chat__action:hover{
+  transform:translateY(-1px);
+  background:rgba(230,191,116,.14);
+  border-color:rgba(230,191,116,.38);
+}
+
+.pitahaya-chat__quick{
+  padding:0 16px 12px;
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+}
+
+.pitahaya-chat__quick button{
+  white-space:nowrap;
+  border:1px solid rgba(232,52,135,.22);
+  border-radius:999px;
+  padding:9px 11px;
+  color:rgba(255,248,236,.86);
+  background:rgba(232,52,135,.08);
+  font-size:12px;
+  font-weight:750;
+  cursor:pointer;
+}
+
+.pitahaya-chat__composer{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:10px;
+  padding:14px;
+  border-top:1px solid rgba(255,255,255,.10);
+  background:rgba(0,0,0,.14);
+}
+
+.pitahaya-chat__input{
+  min-width:0;
+  min-height:44px;
+  border-radius:15px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.06);
+  color:#fff8ec;
+  padding:0 13px;
+  outline:none;
+}
+
+.pitahaya-chat__input::placeholder{color:rgba(255,248,236,.46)}
+
+.pitahaya-chat__input:focus{
+  border-color:rgba(232,52,135,.50);
+  box-shadow:0 0 0 3px rgba(232,52,135,.12);
+}
+
+.pitahaya-chat__send{
+  min-width:76px;
+  min-height:44px;
+  border:0;
+  border-radius:15px;
+  color:#09100e;
+  background:linear-gradient(135deg,#e6bf74,#e83487);
+  font-weight:900;
+  cursor:pointer;
+}
+
+.pitahaya-chat__privacy{
+  padding:0 16px 14px;
+  color:rgba(255,248,236,.48);
+  font-size:11px;
+  line-height:1.45;
+}
+
+.pitahaya-chat__launcher:focus-visible,
+.pitahaya-chat__close:focus-visible,
+.pitahaya-chat__action:focus-visible,
+.pitahaya-chat__quick button:focus-visible,
+.pitahaya-chat__send:focus-visible{
+  outline:2px solid rgba(232,52,135,.72);
+  outline-offset:3px;
+}
+
+@media (max-width:620px){
+  .demo-footer{
+    padding-bottom:calc(78px + env(safe-area-inset-bottom)) !important;
+  }
+
+  .pitahaya-chat{
+    right:12px;
+    bottom:12px;
+    left:auto;
+  }
+
+  .pitahaya-chat__launcher{
+    width:54px;
+    min-width:54px;
+    min-height:54px;
+    padding:0;
+    gap:0;
+    box-shadow:0 18px 54px rgba(0,0,0,.34), 0 0 0 6px rgba(230,191,116,.07);
+  }
+
+  .pitahaya-chat.is-open{
+    left:12px;
+  }
+
+  .pitahaya-chat__panel{
+    width:100%;
+    max-height:calc(100vh - 24px);
+  }
+
+  .pitahaya-chat__messages{
+    height:min(360px, calc(100vh - 280px));
+  }
+}

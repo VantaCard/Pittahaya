@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#03080d" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'self' mailto:; script-src 'self'; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; style-src-attr 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://images.unsplash.com data:; connect-src 'self'; frame-src 'none'; child-src 'none'; worker-src 'none'; manifest-src 'self'; media-src 'self'; upgrade-insecure-requests" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <title>Demo • Startup Tech | Pitahaya</title>
+  <link rel="icon" href="assets/pitahaya-logo.png" />
+  <meta name="description" content="Demo startup tech para SaaS, apps y productos digitales." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+:root{
+  --void:#03080d;
+  --panel:#071521;
+  --panel2:#0b2330;
+  --text:#effcff;
+  --muted:rgba(239,252,255,.68);
+  --line:rgba(239,252,255,.13);
+  --cyan:#42e8ff;
+  --lime:#c8ff4d;
+  --orange:#ff8b3d;
+  --shadow:0 36px 120px rgba(0,0,0,.62);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:"Space Grotesk", system-ui, sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(900px 620px at 12% -8%, rgba(66,232,255,.20), transparent 62%),
+    radial-gradient(780px 520px at 88% 4%, rgba(200,255,77,.12), transparent 60%),
+    linear-gradient(180deg, var(--void), #06131d 58%, #02060a);
+  overflow-x:hidden;
+}
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  opacity:.10;
+  background:
+    linear-gradient(90deg, rgba(255,255,255,.7) 1px, transparent 1px),
+    linear-gradient(rgba(255,255,255,.7) 1px, transparent 1px);
+  background-size:46px 46px;
+  mask-image:radial-gradient(circle at 50% 0%, #000 0, transparent 70%);
+}
+a{color:inherit;text-decoration:none}
+.wrap{width:min(1180px, calc(100% - 44px));margin:0 auto}
+.nav{
+  position:sticky;
+  top:0;
+  z-index:30;
+  background:rgba(3,8,13,.72);
+  border-bottom:1px solid var(--line);
+  backdrop-filter:blur(18px);
+}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 0}
+.brand{display:flex;align-items:center;gap:12px}
+.cube{
+  width:58px;
+  height:58px;
+  border-radius:16px;
+  display:grid;
+  place-items:center;
+  color:#031015;
+  font-family:"IBM Plex Mono", monospace;
+  font-weight:700;
+  background:linear-gradient(135deg, var(--cyan), var(--lime));
+  box-shadow:0 18px 55px rgba(66,232,255,.20);
+}
+.brand b{display:block;font-family:"IBM Plex Mono", monospace;font-size:13px;text-transform:uppercase;letter-spacing:.9px}
+.brand span{display:block;margin-top:2px;color:rgba(239,252,255,.56);font-size:12px}
+.navLinks{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+.link,.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:42px;
+  padding:10px 14px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.045);
+  color:rgba(239,252,255,.88);
+}
+.link:hover,.btn:hover{border-color:rgba(66,232,255,.38);background:rgba(66,232,255,.08)}
+.hero{padding:74px 0 34px}
+.heroGrid{display:grid;grid-template-columns:.95fr 1.05fr;gap:24px;align-items:center}
+.eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 12px;
+  border-radius:999px;
+  border:1px solid rgba(66,232,255,.26);
+  background:rgba(66,232,255,.08);
+  color:rgba(239,252,255,.76);
+  text-transform:uppercase;
+  letter-spacing:.9px;
+  font-family:"IBM Plex Mono", monospace;
+  font-size:12px;
+}
+.pulse{width:8px;height:8px;border-radius:50%;background:var(--lime);box-shadow:0 0 22px rgba(200,255,77,.85)}
+h1{
+  margin:18px 0 16px;
+  font-size:clamp(42px,5.4vw,82px);
+  line-height:.93;
+  letter-spacing:-3px;
+}
+.lead{margin:0;color:var(--muted);font-size:17px;line-height:1.76;max-width:62ch}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
+.btn{
+  border-radius:18px;
+  min-height:48px;
+  padding:13px 17px;
+  transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease, background .18s ease;
+}
+.btn:hover{transform:translateY(-2px);box-shadow:0 18px 55px rgba(0,0,0,.38)}
+.primary{
+  background:linear-gradient(135deg, var(--cyan), var(--lime));
+  color:#031015;
+  border-color:rgba(200,255,77,.38);
+  font-weight:700;
+}
+.signals{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:22px}
+.signal{
+  padding:14px;
+  border-radius:18px;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.045);
+}
+.signal b{display:block;color:var(--cyan);font-size:13px}
+.signal span{display:block;margin-top:6px;color:rgba(239,252,255,.66);font-size:12px;line-height:1.45}
+.productStage{
+  border-radius:34px;
+  border:1px solid var(--line);
+  background:linear-gradient(145deg, rgba(255,255,255,.075), rgba(255,255,255,.03));
+  box-shadow:var(--shadow);
+  padding:14px;
+  position:relative;
+  overflow:hidden;
+}
+.productStage:before{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  background:radial-gradient(680px 260px at 12% 0%, rgba(66,232,255,.20), transparent 62%);
+  pointer-events:none;
+}
+.appShell{position:relative;border-radius:24px;overflow:hidden;border:1px solid rgba(255,255,255,.13);background:var(--panel)}
+.appTop{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px;border-bottom:1px solid rgba(255,255,255,.10)}
+.traffic{display:flex;gap:7px}
+.traffic span{width:10px;height:10px;border-radius:50%;background:var(--orange)}
+.traffic span:nth-child(2){background:var(--honey, #ffd166)}
+.traffic span:nth-child(3){background:var(--lime)}
+.appTop b{font-family:"IBM Plex Mono";font-size:12px;color:rgba(239,252,255,.70)}
+.dashboard{display:grid;grid-template-columns:1fr .8fr;gap:12px;padding:14px}
+.screen{
+  min-height:330px;
+  border-radius:22px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.12);
+  background:
+    linear-gradient(180deg, rgba(66,232,255,.10), transparent),
+    url("https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format") center/cover;
+  position:relative;
+}
+.screen:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(3,8,13,.20), rgba(3,8,13,.78))}
+.metricStack{display:grid;gap:10px}
+.metric{
+  border-radius:20px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.05);
+  padding:14px;
+}
+.metric small{font-family:"IBM Plex Mono";color:rgba(239,252,255,.52);font-size:11px;text-transform:uppercase;letter-spacing:.8px}
+.metric b{display:block;margin-top:14px;font-size:28px}
+.metric span{display:block;margin-top:5px;color:rgba(239,252,255,.62);font-size:12px;line-height:1.4}
+.ticker{
+  display:flex;
+  gap:10px;
+  padding:0 14px 14px;
+  flex-wrap:wrap;
+}
+.tag{
+  font-family:"IBM Plex Mono";
+  font-size:11px;
+  padding:8px 10px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.045);
+  color:rgba(239,252,255,.70);
+}
+.section{padding:26px 0 84px}
+.sectionHead{display:grid;grid-template-columns:.86fr 1.14fr;gap:18px;align-items:end;margin-bottom:16px}
+.sectionHead h2{margin:0;font-size:clamp(34px,4.2vw,62px);line-height:.96;letter-spacing:-2px}
+.sectionHead p{margin:0;color:var(--muted);line-height:1.72}
+.featureGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.feature{
+  min-height:230px;
+  padding:18px;
+  border-radius:26px;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.045);
+  position:relative;
+  overflow:hidden;
+}
+.feature:after{content:"";position:absolute;right:-70px;bottom:-70px;width:160px;height:160px;border-radius:50%;background:rgba(66,232,255,.10)}
+.feature small{font-family:"IBM Plex Mono";font-size:12px;color:var(--lime)}
+.feature h3{margin:48px 0 8px;font-size:21px}
+.feature p{margin:0;color:rgba(239,252,255,.68);line-height:1.62;font-size:14px}
+.productMap{
+  margin-top:14px;
+  display:grid;
+  grid-template-columns:1.05fr .95fr;
+  gap:14px;
+}
+.mapCard,.stack{
+  border-radius:30px;
+  border:1px solid var(--line);
+  background:rgba(0,0,0,.18);
+  padding:22px;
+}
+.mapCard h2{font-size:36px;line-height:1;margin:0 0 10px;letter-spacing:-1.2px}
+.mapCard p{margin:0;color:var(--muted);line-height:1.7}
+.stack{display:grid;gap:10px}
+.stack div{
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  align-items:center;
+  gap:12px;
+  padding:13px 14px;
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,.11);
+  background:rgba(255,255,255,.045);
+  font-family:"IBM Plex Mono";
+  font-size:12px;
+}
+.stack i{font-style:normal;color:var(--lime)}
+.stack b{font-size:12px}
+.stack span{color:rgba(239,252,255,.56)}
+.startupCta{
+  margin-top:14px;
+  padding:24px;
+  border-radius:30px;
+  border:1px solid rgba(66,232,255,.26);
+  background:linear-gradient(135deg, rgba(66,232,255,.14), rgba(200,255,77,.10));
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:18px;
+  align-items:center;
+}
+.startupCta h2{font-size:38px;line-height:.98;margin:0 0 8px;letter-spacing:-1.2px}
+.startupCta p{margin:0;color:var(--muted);line-height:1.65}
+.footer{padding:28px 0 42px;border-top:1px solid var(--line);background:rgba(0,0,0,.18)}
+.footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center}
+small{color:rgba(239,252,255,.60)}
+[data-reveal]{opacity:0;transform:translateY(14px) scale(.99);transition:opacity .75s ease, transform .75s ease}
+[data-reveal].in{opacity:1;transform:translateY(0) scale(1)}
+.demo-corner-logo{
+  position:fixed;
+  left:18px;
+  bottom:18px;
+  z-index:50;
+  width:82px;
+  height:82px;
+  pointer-events:none;
+}
+.demo-corner-logo img{width:100%;height:100%;object-fit:contain;padding:0}
+@media (max-width:980px){
+  .heroGrid,.sectionHead,.productMap,.startupCta{grid-template-columns:1fr}
+  .dashboard{grid-template-columns:1fr}
+  .featureGrid{grid-template-columns:1fr}
+}
+@media (max-width:620px){
+  .wrap{width:min(1180px, calc(100% - 30px))}
+  .nav .wrap{align-items:flex-start}
+  .brand span{display:none}
+  .navLinks{justify-content:flex-end}
+  .hero{padding:48px 0 28px}
+  .signals{grid-template-columns:1fr}
+  .screen{min-height:250px}
+  .stack div{grid-template-columns:1fr}
+  .actions .btn,.startupCta .btn{width:100%}
+  .demo-corner-logo{
+  position:fixed;
+  left:18px;
+  bottom:18px;
+  z-index:50;
+  width:82px;
+  height:82px;
+  pointer-events:none;
+}
+}
+  </style>
+  <link rel="stylesheet" href="assets/chatbot.css?v=chat-8" />
+</head>
+<body>
+<header class="nav">
+  <div class="wrap">
+    <div class="brand">
+      <div class="cube">OS</div>
+      <div>
+        <b>SignalOS</b>
+        <span>Startup product showcase</span>
+      </div>
+    </div>
+    <div class="navLinks">
+      <a class="link" href="portafolio.html">&larr; Volver</a>
+      <a class="link" href="contacto.html">Contacto</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap heroGrid">
+      <div data-reveal>
+        <span class="eyebrow"><span class="pulse"></span> SaaS ready</span>
+        <h1>Haz que tu producto parezca listo para escalar.</h1>
+        <p class="lead">Una demo tech para apps, SaaS, automatizaciones y plataformas que necesitan verse invertibles, confiables y fáciles de entender incluso antes de tener una venta grande.</p>
+        <div class="actions">
+          <a class="btn primary" href="contacto.html">Diseñar mi producto web</a>
+          <a class="btn" href="portafolio.html">Ver más demos</a>
+        </div>
+        <div class="signals">
+          <div class="signal"><b>Promesa producto</b><span>Explica qué hace, para quién y por qué importa.</span></div>
+          <div class="signal"><b>Interfaz creíble</b><span>La página se siente como software real, no como folleto.</span></div>
+          <div class="signal"><b>CTA de adopción</b><span>Demo, waitlist, onboarding o contacto según la etapa.</span></div>
+        </div>
+      </div>
+
+      <div class="productStage" data-reveal style="transition-delay:.1s">
+        <div class="appShell">
+          <div class="appTop">
+            <div class="traffic"><span></span><span></span><span></span></div>
+            <b>live/product-health</b>
+          </div>
+          <div class="dashboard">
+            <div class="screen" aria-label="Vista visual de plataforma tecnológica"></div>
+            <div class="metricStack">
+              <div class="metric"><small>Activation</small><b>43%</b><span>Usuarios completan el primer valor en menos pasos.</span></div>
+              <div class="metric"><small>Pipeline</small><b>128</b><span>Leads esperando demo, beta o onboarding.</span></div>
+              <div class="metric"><small>Trust</small><b>99.9</b><span>Lenguaje visual preparado para enterprise.</span></div>
+            </div>
+          </div>
+          <div class="ticker">
+            <span class="tag">AI workflow</span>
+            <span class="tag">Dashboard</span>
+            <span class="tag">Integrations</span>
+            <span class="tag">Waitlist</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="sectionHead">
+        <h2>No basta con verse moderno. Debe explicar adopción.</h2>
+        <p>Esta demo usa bloques de producto reales: problema, solución, casos de uso, métricas, integraciones, prueba y acción. Perfecta para validar una idea sin parecer pequeña.</p>
+      </div>
+
+      <div class="featureGrid">
+        <div class="feature" data-reveal><small>01</small><h3>Arquitectura SaaS</h3><p>Secciones que comunican valor, usuarios, flujo y resultado sin sobreexplicar.</p></div>
+        <div class="feature" data-reveal style="transition-delay:.06s"><small>02</small><h3>Look de producto</h3><p>Paneles, métricas y UI cards para que el negocio se sienta activo y construido.</p></div>
+        <div class="feature" data-reveal style="transition-delay:.12s"><small>03</small><h3>Confianza técnica</h3><p>Lenguaje visual para startups, automatización, IA, fintech, software y tools.</p></div>
+      </div>
+
+      <div class="productMap">
+        <div class="mapCard" data-reveal>
+          <h2>Ideal para mostrar un MVP como si ya tuviera tracción.</h2>
+          <p>El objetivo es que la persona diga: "entiendo el producto, se ve serio y quiero probarlo". Eso cambia la conversación.</p>
+        </div>
+        <div class="stack" data-reveal style="transition-delay:.08s">
+          <div><i>01</i><b>Hero</b><span>Promesa + captura</span></div>
+          <div><i>02</i><b>Use cases</b><span>Quién lo usa</span></div>
+          <div><i>03</i><b>Proof</b><span>Métricas o roadmap</span></div>
+          <div><i>04</i><b>CTA</b><span>Demo o waitlist</span></div>
+        </div>
+      </div>
+
+      <div class="startupCta" data-reveal>
+        <div>
+          <h2>Tu tecnología debe sentirse inevitable.</h2>
+          <p>Una experiencia así ayuda a convertir curiosidad en demo, beta privada, lista de espera o llamada comercial.</p>
+        </div>
+        <a class="btn primary" href="contacto.html">Crear mi demo tech</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer demo-footer">
+  <div class="wrap">
+    <div class="demo-footer-brand">
+      <img src="assets/pitahaya-logo.png" alt="Pitahaya logo">
+      <span>Demo interna para clientes</span>
+      <strong>Pitahaya</strong>
+    </div>
+    <div class="navLinks">
+      <a class="link" href="portafolio.html">Ver más demos</a>
+      <a class="link" href="contacto.html">Comencemos tu proyecto</a>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/demo-reveal.js?v=motion-3" defer></script>
+<div class="demo-corner-logo" aria-hidden="true">
+  <img src="assets/pitahaya-logo.png" alt="Pitahaya logo">
+</div>
+<script src="assets/chatbot.js?v=chat-2" defer></script>
+</body>
+</html>

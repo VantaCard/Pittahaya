@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <title>Portafolio | Pitahaya</title>
+  <meta name="description" content="Portafolio de demos premium de diseño web para landing pages, empresas, marcas, servicios y startups." />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#07080b" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'self' mailto:; script-src 'self'; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; style-src-attr 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://images.unsplash.com data:; connect-src 'self'; frame-src 'none'; child-src 'none'; worker-src 'none'; manifest-src 'self'; media-src 'self'; upgrade-insecure-requests" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css?v=ecosystem-6" />
+  <link rel="icon" href="assets/pitahaya-logo.png" />
+  <link rel="stylesheet" href="assets/chatbot.css?v=chat-8" />
+</head>
+<body>
+  <div class="top-ambient" aria-hidden="true"></div>
+<header class="header">
+  <div class="container header-inner">
+    <a class="brand" href="index.html" aria-label="Pitahaya">
+      <img class="brand-logo" src="assets/pitahaya-logo.png" alt="Pitahaya logo">
+      <span>
+        <span class="brand-name">Pitahaya</span>
+        <span class="brand-sub">Diseño premium con raíz ecuatoriana</span>
+      </span>
+    </a>
+
+    <nav class="nav" aria-label="Navegación principal">
+      <a data-nav href="index.html">Inicio</a>
+      <a data-nav href="servicios.html">Servicios</a>
+      <a data-nav href="planes.html">Planes</a>
+      <a data-nav href="portafolio.html">Portafolio</a>
+      <a data-nav href="sobre-mi.html">Sobre nosotros</a>
+      <a data-nav href="contacto.html" class="btn btn-ghost" style="padding:10px 12px;">Contacto</a>
+    </nav>
+
+    <button id="openDrawer" class="hamburger" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobileDrawer">☰</button>
+  </div>
+</header>
+
+<div id="mobileDrawer" class="mobile-drawer" aria-hidden="true">
+  <div class="drawer-panel" role="dialog" aria-modal="true" aria-label="Menú">
+    <div class="drawer-head">
+      <div class="brand" style="gap:10px;">
+        <img class="brand-logo" src="assets/pitahaya-logo.png" alt="Pitahaya logo" style="width:58px;height:58px;">
+        <span>
+          <span class="brand-name">Pitahaya</span>
+          <span class="brand-sub">Menú</span>
+        </span>
+      </div>
+      <button id="closeDrawer" class="drawer-close" aria-label="Cerrar">✕</button>
+    </div>
+    <div class="drawer-links">
+      <a data-nav href="index.html">Inicio</a>
+      <a data-nav href="servicios.html">Servicios</a>
+      <a data-nav href="planes.html">Planes / Precios</a>
+      <a data-nav href="portafolio.html">Portafolio</a>
+      <a data-nav href="sobre-mi.html">Sobre nosotros</a>
+      <a data-nav href="contacto.html">Contacto</a>
+    </div>
+  </div>
+</div>
+<main>
+  <section class="section">
+    <div class="container">
+      <span class="badge reveal"><span class="dot"></span> Showroom de experiencias</span>
+      <h1 class="section-title reveal">Elige la sensación que quieres que tu cliente tenga al entrar</h1>
+      <p class="section-lead reveal">Cada demo representa una dirección visual completa: conversión, autoridad, creatividad, servicios, tecnología o lujo editorial.</p>
+
+      <div class="portfolio-toolbar reveal" data-portfolio-filter data-target=".portfolio-gallery" aria-label="Filtrar demos por intención">
+        <button type="button" class="active" data-filter="all" aria-pressed="true">Todo</button>
+        <button type="button" data-filter="ventas" aria-pressed="false">Ventas</button>
+        <button type="button" data-filter="confianza" aria-pressed="false">Confianza</button>
+        <button type="button" data-filter="marca" aria-pressed="false">Marca</button>
+        <button type="button" data-filter="tech" aria-pressed="false">Tech</button>
+        <button type="button" data-filter="lujo" aria-pressed="false">Lujo</button>
+      </div>
+
+      <div class="gallery portfolio-gallery">
+        <div class="project featured reveal" data-url="demo-landing.html" data-category="ventas confianza" role="link" aria-label="Demo: Landing Premium">
+          <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?auto=format&amp;fit=crop&amp;w=1400&amp;q=80" alt="Equipo preparando una campaña de conversión premium" loading="lazy">
+          <div class="meta"><div><span class="project-type">Sprint de Conversión</span><h4>Landing Premium</h4><span>Para ofertas que necesitan convertir atención en deseo y leads calientes.</span></div><span class="pill">Ver demo</span></div>
+        </div>
+        <div class="project reveal" data-url="demo-corporativa.html" data-category="confianza ventas" role="link" aria-label="Demo: Web Corporativa">
+          <img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&amp;fit=crop&amp;w=1400&amp;q=80" alt="Oficina ejecutiva para una web corporativa premium" loading="lazy">
+          <div class="meta"><div><span class="project-type">Confianza Ejecutiva</span><h4>Web Corporativa</h4><span>Para empresas que venden confianza, trayectoria y decisiones de alto valor.</span></div><span class="pill">Ver demo</span></div>
+        </div>
+        <div class="project reveal" data-url="demo-marca.html" data-category="marca lujo" role="link" aria-label="Demo: Marca & Diseño">
+          <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&amp;fit=crop&amp;w=1400&amp;q=80" alt="Marca y diseño para una experiencia visual premium" loading="lazy">
+          <div class="meta"><div><span class="project-type">Estudio de Marca</span><h4>Marca & Diseño</h4><span>Para marcas creativas que necesitan una identidad imposible de copiar.</span></div><span class="pill">Ver demo</span></div>
+        </div>
+        <div class="project reveal" data-url="demo-servicios.html" data-category="ventas confianza" role="link" aria-label="Demo: Sitio de Servicios">
+          <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&amp;fit=crop&amp;w=1400&amp;q=80" alt="Cliente y equipo ordenando una oferta de servicios" loading="lazy">
+          <div class="meta"><div><span class="project-type">Menú de Servicios</span><h4>Sitio de Servicios</h4><span>Para ordenar paquetes, proceso y valor antes de que el cliente pida precio.</span></div><span class="pill">Ver demo</span></div>
+        </div>
+        <div class="project reveal" data-url="demo-startup.html" data-category="tech confianza" role="link" aria-label="Demo: Startup Tech">
+          <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&amp;fit=crop&amp;w=1400&amp;q=80" alt="Producto tecnológico con estética SaaS moderna" loading="lazy">
+          <div class="meta"><div><span class="project-type">Vitrina SaaS</span><h4>Startup Tech</h4><span>Para apps y productos digitales que necesitan verse listos para escalar.</span></div><span class="pill">Ver demo</span></div>
+        </div>
+        <div class="project reveal" data-url="demo-highend.html" data-category="lujo marca" role="link" aria-label="Demo: Diseño High-End">
+          <img src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&amp;fit=crop&amp;w=1400&amp;q=80" alt="Joyería premium con estética editorial" loading="lazy">
+          <div class="meta"><div><span class="project-type">Lujo Editorial</span><h4>Diseño High-End</h4><span>Para marcas que necesitan sentirse caras sin decir demasiado.</span></div><span class="pill">Ver demo</span></div>
+        </div>
+      </div>
+
+      <div class="portfolio-note reveal">
+        <div class="card hover-lift">
+          <div class="card-inner">
+            <div class="kicker">Cómo usar estas demos</div>
+            <h3>No tienes que escoger una plantilla exacta</h3>
+            <p>La demo sirve para encontrar la emoción correcta: más ventas, más confianza, más lujo, más energía o más claridad.</p>
+          </div>
+        </div>
+        <div class="card hover-lift">
+          <div class="card-inner">
+            <div class="kicker">Resultado real</div>
+            <h3>Tu web se diseña alrededor de tu negocio</h3>
+            <p>Se adapta el estilo a tu oferta, tu cliente ideal, tu contenido y el nivel de percepción que quieres proyectar.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="hr reveal"></div>
+      <div class="conversion-panel reveal">
+        <div>
+          <h2 class="section-title">¿Ya viste una dirección que encaja con tu marca?</h2>
+          <p>Podemos tomar esa energía visual y adaptarla a tu producto, tus clientes y tu forma de vender.</p>
+        </div>
+        <a class="btn btn-gold" href="contacto.html">Crear mi dirección visual</a>
+      </div>
+    </div>
+  </section>
+</main>
+<footer class="footer">
+  <div class="container footer-grid">
+    <div>
+      <div class="brand" style="margin-bottom:10px;">
+        <img class="brand-logo" src="assets/pitahaya-logo.png" alt="Pitahaya logo">
+        <span>
+          <span class="brand-name">Pitahaya</span>
+          <span class="brand-sub">Webs memorables con raíz ecuatoriana</span>
+        </span>
+      </div>
+      <small>© <span id="y"></span> Pitahaya. Todos los derechos reservados.</small>
+    </div>
+    <div class="footer-links" aria-label="Enlaces del sitio">
+      <a href="servicios.html">Servicios</a>
+      <a href="planes.html">Planes</a>
+      <a href="portafolio.html">Portafolio</a>
+      <a href="sobre-mi.html">Sobre nosotros</a>
+      <a href="contacto.html">Contacto</a>
+    </div>
+  </div>
+</footer>
+<script src="assets/app.js?v=contact-1" defer></script>
+<script src="assets/chatbot.js?v=chat-2" defer></script>
+</body>
+</html>

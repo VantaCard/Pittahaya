@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#09131f" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'self' mailto:; script-src 'self'; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; style-src-attr 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://images.unsplash.com data:; connect-src 'self'; frame-src 'none'; child-src 'none'; worker-src 'none'; manifest-src 'self'; media-src 'self'; upgrade-insecure-requests" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <title>Demo • Web Corporativa | Pitahaya</title>
+  <link rel="icon" href="assets/pitahaya-logo.png" />
+  <meta name="description" content="Demo corporativa premium para empresas que necesitan autoridad y confianza." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&amp;family=Source+Sans+3:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+:root{
+  --navy:#09131f;
+  --blue:#10243a;
+  --steel:#dfe8f1;
+  --muted:rgba(223,232,241,.72);
+  --line:rgba(223,232,241,.14);
+  --gold:#c9a65b;
+  --ice:#8fb8d8;
+  --card:rgba(255,255,255,.055);
+  --shadow:0 34px 110px rgba(0,0,0,.54);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:"Source Sans 3", system-ui, sans-serif;
+  color:var(--steel);
+  background:
+    radial-gradient(820px 540px at 12% -8%, rgba(143,184,216,.22), transparent 62%),
+    linear-gradient(115deg, rgba(201,166,91,.11), transparent 28%),
+    linear-gradient(180deg, var(--navy), var(--blue) 58%, #070d15);
+  overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none}
+.wrap{width:min(1180px, calc(100% - 44px));margin:0 auto}
+.nav{
+  position:sticky;
+  top:0;
+  z-index:30;
+  background:rgba(9,19,31,.72);
+  border-bottom:1px solid var(--line);
+  backdrop-filter:blur(18px);
+}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:15px 0}
+.brand{display:flex;align-items:center;gap:12px}
+.crest{
+  width:58px;
+  height:58px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  border:1px solid rgba(201,166,91,.55);
+  background:linear-gradient(135deg, rgba(201,166,91,.34), rgba(143,184,216,.12));
+  color:#fff8e5;
+  font-family:"Libre Baskerville", serif;
+  font-weight:700;
+}
+.brand b{display:block;font-family:"Libre Baskerville", serif;font-size:17px}
+.brand span{display:block;margin-top:2px;font-size:12px;text-transform:uppercase;letter-spacing:.9px;color:rgba(223,232,241,.58)}
+.navLinks{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+.link,.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:42px;
+  padding:10px 14px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.04);
+  color:rgba(223,232,241,.88);
+}
+.link:hover,.btn:hover{border-color:rgba(201,166,91,.42);background:rgba(201,166,91,.09)}
+.hero{padding:74px 0 34px}
+.heroGrid{display:grid;grid-template-columns:1.04fr .96fr;gap:24px;align-items:center}
+.eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 12px;
+  border-radius:999px;
+  border:1px solid rgba(201,166,91,.28);
+  background:rgba(201,166,91,.08);
+  color:rgba(223,232,241,.76);
+  text-transform:uppercase;
+  letter-spacing:.9px;
+  font-size:12px;
+  font-weight:700;
+}
+.lineDot{width:28px;height:1px;background:var(--gold);box-shadow:0 0 16px rgba(201,166,91,.9)}
+h1{
+  margin:18px 0 16px;
+  font-family:"Libre Baskerville", ui-serif, Georgia, serif;
+  font-size:clamp(42px,5.2vw,78px);
+  line-height:1;
+  letter-spacing:-2.2px;
+}
+.lead{margin:0;color:var(--muted);font-size:17px;line-height:1.78;max-width:64ch}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
+.btn{
+  border-radius:16px;
+  min-height:48px;
+  padding:13px 17px;
+  transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease, background .18s ease;
+}
+.btn:hover{transform:translateY(-2px);box-shadow:0 18px 55px rgba(0,0,0,.34)}
+.primary{
+  background:linear-gradient(135deg, var(--gold), #f2dca4);
+  color:#11100a;
+  border-color:rgba(242,220,164,.42);
+  font-weight:700;
+}
+.trustStrip{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:22px}
+.trust{
+  padding:14px;
+  border-radius:18px;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.045);
+}
+.trust b{display:block;color:#f2dca4;font-size:13px}
+.trust span{display:block;margin-top:6px;color:rgba(223,232,241,.68);font-size:12px;line-height:1.45}
+.executivePanel{
+  border-radius:34px;
+  overflow:hidden;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.045);
+  box-shadow:var(--shadow);
+}
+.heroPhoto{height:390px;position:relative}
+.heroPhoto img{width:100%;height:100%;object-fit:cover;filter:saturate(.98) contrast(1.06)}
+.heroPhoto:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg, transparent 38%, rgba(9,19,31,.88))}
+.brief{
+  position:absolute;
+  left:18px;
+  right:18px;
+  bottom:18px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  z-index:2;
+}
+.brief div{
+  padding:14px;
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,.17);
+  background:rgba(9,19,31,.62);
+  backdrop-filter:blur(14px);
+}
+.brief b{display:block;color:#f2dca4;font-size:14px}
+.brief span{display:block;margin-top:5px;color:rgba(223,232,241,.68);font-size:12px;line-height:1.4}
+.section{padding:26px 0 84px}
+.sectionHead{display:grid;grid-template-columns:.9fr 1.1fr;gap:18px;align-items:end;margin-bottom:16px}
+.sectionHead h2{margin:0;font-family:"Libre Baskerville";font-size:clamp(34px,4vw,56px);line-height:1.03;letter-spacing:-1.4px}
+.sectionHead p{margin:0;color:var(--muted);line-height:1.7}
+.authorityGrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.authority{
+  min-height:230px;
+  padding:18px;
+  border-radius:26px;
+  border:1px solid var(--line);
+  background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.035));
+}
+.authority small{font-size:12px;text-transform:uppercase;letter-spacing:.9px;color:rgba(201,166,91,.86)}
+.authority h3{margin:44px 0 8px;font-size:21px}
+.authority p{margin:0;color:rgba(223,232,241,.70);line-height:1.65;font-size:14px}
+.report{
+  margin-top:14px;
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:14px;
+}
+.reportCard,.ledger{
+  border-radius:30px;
+  border:1px solid var(--line);
+  background:rgba(0,0,0,.16);
+  padding:22px;
+}
+.reportCard h2{font-family:"Libre Baskerville";font-size:34px;line-height:1.05;margin:0 0 10px}
+.reportCard p{margin:0;color:var(--muted);line-height:1.7}
+.ledger{display:grid;gap:10px}
+.row{
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  gap:12px;
+  align-items:center;
+  padding:13px 14px;
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,.10);
+  background:rgba(255,255,255,.04);
+}
+.row i{font-style:normal;color:#f2dca4;font-weight:700}
+.row b{font-size:14px}
+.row span{font-size:12px;color:rgba(223,232,241,.56)}
+.corpCta{
+  margin-top:14px;
+  padding:24px;
+  border-radius:30px;
+  border:1px solid rgba(201,166,91,.28);
+  background:linear-gradient(135deg, rgba(201,166,91,.15), rgba(143,184,216,.10));
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:18px;
+  align-items:center;
+}
+.corpCta h2{font-family:"Libre Baskerville";font-size:36px;line-height:1.04;margin:0 0 8px}
+.corpCta p{margin:0;color:var(--muted);line-height:1.65}
+.footer{padding:28px 0 42px;border-top:1px solid var(--line);background:rgba(0,0,0,.14)}
+.footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center}
+small{color:rgba(223,232,241,.62)}
+[data-reveal]{opacity:0;transform:translateY(14px);transition:opacity .75s ease, transform .75s ease}
+[data-reveal].in{opacity:1;transform:translateY(0)}
+.demo-corner-logo{
+  position:fixed;
+  left:18px;
+  bottom:18px;
+  z-index:50;
+  width:82px;
+  height:82px;
+  pointer-events:none;
+}
+.demo-corner-logo img{width:100%;height:100%;object-fit:contain;padding:0}
+@media (max-width:980px){
+  .heroGrid,.sectionHead,.report,.corpCta{grid-template-columns:1fr}
+  .authorityGrid{grid-template-columns:1fr}
+  .heroPhoto{height:360px}
+}
+@media (max-width:620px){
+  .wrap{width:min(1180px, calc(100% - 30px))}
+  .nav .wrap{align-items:flex-start}
+  .brand span{display:none}
+  .navLinks{justify-content:flex-end}
+  .hero{padding:48px 0 28px}
+  .trustStrip,.brief{grid-template-columns:1fr}
+  .row{grid-template-columns:1fr}
+  .actions .btn,.corpCta .btn{width:100%}
+  .demo-corner-logo{
+  position:fixed;
+  left:18px;
+  bottom:18px;
+  z-index:50;
+  width:82px;
+  height:82px;
+  pointer-events:none;
+}
+}
+  </style>
+  <link rel="stylesheet" href="assets/chatbot.css?v=chat-8" />
+</head>
+<body>
+<header class="nav">
+  <div class="wrap">
+    <div class="brand">
+      <div class="crest">A</div>
+      <div>
+        <b>Atlas Advisory</b>
+        <span>Web corporativa de autoridad</span>
+      </div>
+    </div>
+    <div class="navLinks">
+      <a class="link" href="portafolio.html">&larr; Portafolio</a>
+      <a class="link" href="contacto.html">Contacto</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap heroGrid">
+      <div data-reveal>
+        <span class="eyebrow"><span class="lineDot"></span> Decisión B2B</span>
+        <h1>Autoridad digital para decisiones de alto valor.</h1>
+        <p class="lead">Una web sobria, ejecutiva y fácil de escanear para empresas que venden confianza antes que precio: consultoras, firmas legales, constructoras, salud privada y servicios B2B.</p>
+        <div class="actions">
+          <a class="btn primary" href="contacto.html">Quiero una web corporativa</a>
+          <a class="btn" href="planes.html">Ver planes</a>
+        </div>
+        <div class="trustStrip">
+          <div class="trust"><b>Credibilidad</b><span>La marca se siente estable, seria y lista para contratos grandes.</span></div>
+          <div class="trust"><b>Orden ejecutivo</b><span>Servicios, sectores, equipo y proceso sin ruido visual.</span></div>
+          <div class="trust"><b>Riesgo reducido</b><span>Prueba, experiencia y claridad antes de pedir una llamada.</span></div>
+        </div>
+      </div>
+
+      <div class="executivePanel" data-reveal style="transition-delay:.1s">
+        <div class="heroPhoto">
+          <img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&amp;fit=crop&amp;w=2000&amp;q=80" alt="Oficina corporativa con ambiente ejecutivo" loading="eager">
+          <div class="brief">
+            <div><b>Perfil ejecutivo</b><span>Diseño para compradores racionales y equipos directivos.</span></div>
+            <div><b>Ruta clara</b><span>Del problema a la propuesta sin perder tiempo.</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="sectionHead">
+        <h2>La página debe parecer una empresa antes de explicar la empresa.</h2>
+        <p>Esta demo usa jerarquía editorial, tonos sobrios y micropruebas de confianza para que el cliente sienta estabilidad desde el primer vistazo.</p>
+      </div>
+
+      <div class="authorityGrid">
+        <div class="authority" data-reveal><small>01</small><h3>Servicios con peso</h3><p>Bloques organizados por área, sector o problema para que sea fácil entender el alcance.</p></div>
+        <div class="authority" data-reveal style="transition-delay:.06s"><small>02</small><h3>Credenciales visibles</h3><p>Cifras, certificaciones, clientes, procesos y años de experiencia donde más importan.</p></div>
+        <div class="authority" data-reveal style="transition-delay:.12s"><small>03</small><h3>Contacto sin fricción</h3><p>CTA profesional: agenda una llamada, solicita evaluación o pide una propuesta.</p></div>
+      </div>
+
+      <div class="report">
+        <div class="reportCard" data-reveal>
+          <h2>Ideal para vender confianza, no solo información.</h2>
+          <p>Funciona especialmente bien cuando el cliente necesita justificar la decisión internamente o comparar varias opciones antes de elegir.</p>
+        </div>
+        <div class="ledger" data-reveal style="transition-delay:.08s">
+          <div class="row"><i>01</i><b>Presentación</b><span>Quiénes somos</span></div>
+          <div class="row"><i>02</i><b>Capacidades</b><span>Servicios y sectores</span></div>
+          <div class="row"><i>03</i><b>Confianza</b><span>Casos y cifras</span></div>
+          <div class="row"><i>04</i><b>Decisión</b><span>Agenda o propuesta</span></div>
+        </div>
+      </div>
+
+      <div class="corpCta" data-reveal>
+        <div>
+          <h2>Cuando tu cliente entra, debe sentir que puede confiar.</h2>
+          <p>La web organiza tu experiencia y transforma una primera visita fría en una conversación seria.</p>
+        </div>
+        <a class="btn primary" href="contacto.html">Crear mi web corporativa</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer demo-footer">
+  <div class="wrap">
+    <div class="demo-footer-brand">
+      <img src="assets/pitahaya-logo.png" alt="Pitahaya logo">
+      <span>Demo interna para clientes</span>
+      <strong>Pitahaya</strong>
+    </div>
+    <div class="navLinks">
+      <a class="link" href="portafolio.html">Ver más demos</a>
+      <a class="link" href="contacto.html">Solicitar cotización</a>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/demo-reveal.js?v=motion-3" defer></script>
+<div class="demo-corner-logo" aria-hidden="true">
+  <img src="assets/pitahaya-logo.png" alt="Pitahaya logo">
+</div>
+<script src="assets/chatbot.js?v=chat-2" defer></script>
+</body>
+</html>

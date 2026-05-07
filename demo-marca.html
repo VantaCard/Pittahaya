@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#120714" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'self' mailto:; script-src 'self'; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; style-src-attr 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://images.unsplash.com data:; connect-src 'self'; frame-src 'none'; child-src 'none'; worker-src 'none'; manifest-src 'self'; media-src 'self'; upgrade-insecure-requests" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <title>Demo • Marca & Diseño | Pitahaya</title>
+  <link rel="icon" href="assets/pitahaya-logo.png" />
+  <meta name="description" content="Demo de identidad visual para marcas creativas, memorables y premium." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;family=Syne:wght@600;700;800&amp;display=swap" rel="stylesheet">
+
+  <style>
+:root{
+  --ink:#120714;
+  --ink2:#210b28;
+  --text:#fff5fb;
+  --muted:rgba(255,245,251,.72);
+  --hot:#ff3fb4;
+  --hot2:#ff8bd8;
+  --lime:#c9ff5f;
+  --cream:#fff5d9;
+  --line:rgba(255,255,255,.14);
+  --card:rgba(255,255,255,.065);
+  --shadow:0 34px 120px rgba(0,0,0,.58);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:"Plus Jakarta Sans", system-ui, -apple-system, Segoe UI, sans-serif;
+  color:var(--text);
+  background:
+    linear-gradient(115deg, rgba(255,63,180,.23) 0%, transparent 34%),
+    linear-gradient(245deg, rgba(201,255,95,.12) 0%, transparent 38%),
+    repeating-linear-gradient(90deg, rgba(255,255,255,.035) 0 1px, transparent 1px 86px),
+    repeating-linear-gradient(180deg, rgba(255,255,255,.025) 0 1px, transparent 1px 86px),
+    linear-gradient(180deg, var(--ink), var(--ink2) 68%, var(--ink));
+  overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+.wrap{width:min(1180px, calc(100% - 44px)); margin:0 auto}
+.top{
+  position:sticky;
+  top:0;
+  z-index:30;
+  background:rgba(18,7,20,.72);
+  border-bottom:1px solid var(--line);
+  backdrop-filter:blur(16px);
+}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 0}
+.brandLockup{display:flex;align-items:center;gap:12px}
+.mark{
+  width:42px;height:42px;border-radius:16px;
+  display:grid;place-items:center;
+  font-family:"Syne";font-weight:800;
+  color:#140816;
+  background:linear-gradient(135deg,var(--lime),var(--hot2));
+  box-shadow:0 18px 60px rgba(255,63,180,.24);
+}
+.brandLockup b{display:block;font-family:"Syne";font-size:14px;letter-spacing:.08em;text-transform:uppercase}
+.brandLockup span{display:block;margin-top:3px;color:var(--muted);font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+.navlinks{display:flex;gap:10px;flex-wrap:wrap}
+.navlinks a,.btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-height:44px;
+  padding:11px 14px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.045);
+  transition:transform .18s ease, border-color .18s ease, background .18s ease, box-shadow .18s ease;
+}
+.navlinks a:hover,.btn:hover{transform:translateY(-2px);border-color:rgba(255,63,180,.42);background:rgba(255,63,180,.10)}
+.primary{
+  border-color:rgba(255,63,180,.56);
+  background:linear-gradient(135deg, var(--hot), var(--hot2));
+  color:#170512;
+  font-weight:800;
+  box-shadow:0 24px 80px rgba(255,63,180,.22);
+}
+.secondary{border-color:rgba(201,255,95,.34);background:rgba(201,255,95,.10)}
+.hero{padding:66px 0 34px}
+.heroGrid{display:grid;grid-template-columns:.92fr 1.08fr;gap:20px;align-items:center}
+.eyebrow{
+  display:inline-flex;
+  padding:9px 12px;
+  border-radius:999px;
+  border:1px solid rgba(255,63,180,.34);
+  background:rgba(255,63,180,.10);
+  color:var(--hot2);
+  font-size:12px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  font-weight:800;
+}
+h1{
+  font-family:"Syne", system-ui, sans-serif;
+  font-size:clamp(42px, 5vw, 76px);
+  line-height:.96;
+  letter-spacing:0;
+  margin:18px 0 16px;
+}
+.lead{margin:0 0 22px;color:var(--muted);font-size:16px;line-height:1.85;max-width:62ch}
+.cta{display:flex;gap:12px;flex-wrap:wrap}
+.brandSignals{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.brandSignals span{
+  padding:9px 11px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.045);
+  color:rgba(255,245,251,.84);
+  font-size:12px;
+}
+.brandStage{
+  border-radius:32px;
+  border:1px solid var(--line);
+  background:
+    linear-gradient(135deg, rgba(255,63,180,.18), rgba(201,255,95,.08)),
+    rgba(255,255,255,.04);
+  box-shadow:var(--shadow);
+  overflow:hidden;
+  position:relative;
+}
+.stageTop{
+  display:grid;
+  grid-template-columns:1fr .82fr;
+  gap:14px;
+  padding:16px;
+}
+.photoSlice{
+  min-height:360px;
+  border-radius:24px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.12);
+}
+.photoSlice img{width:100%;height:100%;object-fit:cover;filter:saturate(1.12) contrast(1.05)}
+.identityBoard{
+  display:grid;
+  gap:12px;
+}
+.boardPanel{
+  border-radius:24px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(0,0,0,.18);
+  padding:16px;
+}
+.boardPanel strong{display:block;font-family:"Syne";font-size:28px;line-height:.95}
+.boardPanel span{display:block;margin-top:8px;color:var(--muted);font-size:12px;line-height:1.5}
+.typeSample{
+  min-height:158px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  background:linear-gradient(135deg, rgba(255,63,180,.24), rgba(201,255,95,.10));
+}
+.typeSample strong{font-size:40px}
+.palette{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.swatch{min-height:76px;border-radius:18px;border:1px solid rgba(255,255,255,.16)}
+.swatch.hot{background:linear-gradient(135deg,#ff3fb4,#ff8bd8)}
+.swatch.lime{background:linear-gradient(135deg,#c9ff5f,#fff5d9)}
+.swatch.dark{background:linear-gradient(135deg,#120714,#461557)}
+.swatch.light{background:linear-gradient(135deg,#fff5fb,#ff8bd8)}
+.marquee{
+  overflow:hidden;
+  border-top:1px solid var(--line);
+  background:rgba(0,0,0,.22);
+}
+.marqueeTrack{
+  display:flex;
+  width:max-content;
+  animation:moveText 20s linear infinite;
+}
+.marquee span{
+  font-family:"Syne";
+  font-size:clamp(28px,4vw,54px);
+  line-height:1;
+  padding:18px 20px;
+  color:rgba(255,245,251,.92);
+  white-space:nowrap;
+}
+.marquee i{color:var(--lime);font-style:normal}
+@keyframes moveText{
+  from{transform:translateX(0)}
+  to{transform:translateX(-50%)}
+}
+.section{padding:30px 0 80px}
+.sectionHead{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:16px}
+.sectionHead h2{
+  font-family:"Syne";
+  font-size:clamp(28px,3.2vw,44px);
+  line-height:1;
+  margin:0;
+  max-width:760px;
+}
+.sectionHead p{margin:0;color:var(--muted);line-height:1.7;max-width:44ch}
+.matrix{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.matrixCard{
+  border-radius:26px;
+  border:1px solid var(--line);
+  background:var(--card);
+  padding:18px;
+  min-height:190px;
+}
+.matrixCard b{display:block;font-family:"Syne";font-size:18px;color:var(--hot2)}
+.matrixCard p{margin:10px 0 0;color:var(--muted);font-size:13.5px;line-height:1.65}
+.matrixCard:nth-child(2){background:linear-gradient(135deg,rgba(201,255,95,.12),rgba(255,255,255,.04))}
+.matrixCard:nth-child(3){background:linear-gradient(135deg,rgba(255,63,180,.16),rgba(255,255,255,.04))}
+.campaign{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+  margin-top:14px;
+}
+.campaignPanel{
+  border-radius:30px;
+  border:1px solid var(--line);
+  background:linear-gradient(135deg,rgba(255,255,255,.075),rgba(255,63,180,.10));
+  padding:20px;
+}
+.campaignPanel h3{font-family:"Syne";font-size:30px;line-height:1;margin:0 0 10px}
+.campaignPanel p{margin:0;color:var(--muted);line-height:1.75}
+.deliverables{display:grid;gap:10px}
+.deliverables div{
+  display:grid;
+  grid-template-columns:auto 1fr;
+  gap:12px;
+  align-items:center;
+  padding:14px;
+  border-radius:20px;
+  border:1px solid var(--line);
+  background:rgba(0,0,0,.18);
+}
+.deliverables b{
+  display:grid;
+  place-items:center;
+  width:36px;
+  height:36px;
+  border-radius:14px;
+  color:#16030f;
+  background:linear-gradient(135deg,var(--lime),var(--hot2));
+  font-family:"Syne";
+}
+.deliverables span{color:rgba(255,245,251,.82);font-size:13px;line-height:1.5}
+.brandCta{
+  margin-top:14px;
+  border-radius:32px;
+  border:1px solid rgba(255,63,180,.28);
+  background:linear-gradient(135deg,rgba(255,63,180,.18),rgba(201,255,95,.10));
+  padding:22px;
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:18px;
+  align-items:center;
+}
+.brandCta h2{font-family:"Syne";font-size:34px;line-height:1;margin:0 0 10px}
+.brandCta p{margin:0;color:var(--muted);line-height:1.65}
+.footer{padding:26px 0 40px;border-top:1px solid var(--line);background:rgba(0,0,0,.18)}
+.footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center}
+small{color:rgba(255,245,251,.62)}
+[data-reveal]{opacity:0;transform:translateY(14px) scale(.99);transition:opacity .8s ease, transform .8s ease}
+[data-reveal].in{opacity:1;transform:translateY(0) scale(1)}
+.demo-corner-logo{
+  position:fixed;
+  left:18px;
+  bottom:18px;
+  z-index:50;
+  width:82px;
+  height:82px;
+  pointer-events:none;
+}
+.demo-corner-logo img{width:100%;height:100%;object-fit:contain;padding:0}
+@media (max-width:980px){
+  .heroGrid,.stageTop,.campaign,.brandCta{grid-template-columns:1fr}
+  .matrix{grid-template-columns:1fr 1fr}
+  .sectionHead{display:block}
+  .sectionHead p{margin-top:10px}
+  .photoSlice{min-height:300px}
+}
+@media (max-width:560px){
+  .wrap{width:min(1180px, calc(100% - 30px))}
+  .top .wrap{align-items:flex-start}
+  .brandLockup span{display:none}
+  .navlinks a{min-height:40px;padding:9px 11px}
+  .hero{padding:42px 0 24px}
+  .cta .btn,.brandCta .btn{width:100%}
+  .matrix{grid-template-columns:1fr}
+  .palette{grid-template-columns:1fr}
+  .photoSlice{min-height:260px}
+  .demo-corner-logo{
+  position:fixed;
+  left:18px;
+  bottom:18px;
+  z-index:50;
+  width:82px;
+  height:82px;
+  pointer-events:none;
+}
+}
+  </style>
+  <link rel="stylesheet" href="assets/chatbot.css?v=chat-8" />
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <div class="brandLockup">
+      <div class="mark">M</div>
+      <div>
+        <b>Marca & Diseño</b>
+        <span>Identidad visual premium</span>
+      </div>
+    </div>
+    <nav class="navlinks" aria-label="Demo navigation">
+      <a href="portafolio.html">← Volver</a>
+      <a href="contacto.html">Contacto</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap heroGrid">
+      <div data-reveal>
+        <span class="eyebrow">Demo • Estudio de marca</span>
+        <h1>Identidad visual que se siente imposible de copiar</h1>
+        <p class="lead">Una web para marcas creativas que necesitan personalidad real: color, voz, dirección visual y una experiencia que el cliente recuerda después de cerrar la pestaña.</p>
+        <div class="cta">
+          <a class="btn primary" href="contacto.html">Diseñar mi identidad web</a>
+          <a class="btn secondary" href="portafolio.html">Ver más demos</a>
+        </div>
+        <div class="brandSignals" aria-label="Señales de marca">
+          <span>Sistema visual</span>
+          <span>Dirección creativa</span>
+          <span>Storytelling</span>
+          <span>Memorabilidad</span>
+        </div>
+      </div>
+
+      <div class="brandStage" data-reveal style="transition-delay:.10s">
+        <div class="stageTop">
+          <div class="photoSlice">
+            <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&amp;fit=crop&amp;w=1800&amp;q=80" alt="Equipo creativo trabajando en una identidad visual" loading="eager">
+          </div>
+          <div class="identityBoard">
+            <div class="boardPanel typeSample">
+              <strong>NOISE<br>TO ICON</strong>
+              <span>De una marca genérica a una presencia que se reconoce.</span>
+            </div>
+            <div class="palette" aria-label="Paleta visual">
+              <div class="swatch hot"></div>
+              <div class="swatch lime"></div>
+              <div class="swatch dark"></div>
+              <div class="swatch light"></div>
+            </div>
+          </div>
+        </div>
+        <div class="marquee" aria-hidden="true">
+          <div class="marqueeTrack">
+            <span>Brand voice <i>/</i> Color system <i>/</i> Web identity <i>/</i> Social assets <i>/</i></span>
+            <span>Brand voice <i>/</i> Color system <i>/</i> Web identity <i>/</i> Social assets <i>/</i></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="sectionHead" data-reveal>
+        <h2>Más que estética: una marca con sistema, tono y presencia.</h2>
+        <p>Este estilo funciona cuando el negocio necesita diferenciarse en redes, web, campañas y presentación comercial.</p>
+      </div>
+
+      <div class="matrix">
+        <div class="matrixCard" data-reveal><b>Voz</b><p>Mensajes con personalidad: directos, memorables y alineados a la audiencia.</p></div>
+        <div class="matrixCard" data-reveal style="transition-delay:.05s"><b>Paleta</b><p>Color con intención, contrastes vivos y una firma visual reconocible.</p></div>
+        <div class="matrixCard" data-reveal style="transition-delay:.10s"><b>Web</b><p>Una experiencia que traduce la identidad en secciones, CTA y ritmo visual.</p></div>
+        <div class="matrixCard" data-reveal style="transition-delay:.15s"><b>Campaña</b><p>Assets listos para extender el look a anuncios, posts y lanzamientos.</p></div>
+      </div>
+
+      <div class="campaign">
+        <div class="campaignPanel" data-reveal>
+          <h3>Ideal para marcas que no quieren parecer una más.</h3>
+          <p>Moda, belleza, artistas, marca personal, estudios creativos, productos boutique y negocios que necesitan personalidad antes que formalidad.</p>
+        </div>
+        <div class="deliverables" data-reveal style="transition-delay:.08s">
+          <div><b>01</b><span>Hero visual con una promesa poderosa y estética propia.</span></div>
+          <div><b>02</b><span>Secciones de historia, mood, servicios y prueba social.</span></div>
+          <div><b>03</b><span>CTA preparado para agenda, venta, lanzamiento o contacto.</span></div>
+        </div>
+      </div>
+
+      <div class="brandCta" data-reveal>
+        <div>
+          <h2>Tu marca puede sentirse más viva, más clara y más tuya.</h2>
+          <p>Tomamos tu energía visual y la convertimos en una web que no parece armada con piezas genéricas.</p>
+        </div>
+        <a class="btn primary" href="contacto.html">Crear mi estilo</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer demo-footer">
+  <div class="wrap">
+    <div class="demo-footer-brand">
+      <img src="assets/pitahaya-logo.png" alt="Pitahaya logo">
+      <span>Demo interna para clientes</span>
+      <strong>Pitahaya</strong>
+    </div>
+    <nav class="navlinks" aria-label="Demo footer">
+      <a href="portafolio.html">Más demos</a>
+      <a href="contacto.html">Comencemos tu proyecto</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="assets/demo-reveal.js?v=motion-3" defer></script>
+<div class="demo-corner-logo" aria-hidden="true">
+  <img src="assets/pitahaya-logo.png" alt="Pitahaya logo">
+</div>
+<script src="assets/chatbot.js?v=chat-2" defer></script>
+</body>
+</html>
