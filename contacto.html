@@ -6,12 +6,12 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#07080b" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'self' mailto:; script-src 'self'; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; style-src-attr 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://images.unsplash.com data:; connect-src 'self'; frame-src 'none'; child-src 'none'; worker-src 'none'; manifest-src 'self'; media-src 'self'; upgrade-insecure-requests" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'self'; script-src 'self'; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; style-src-attr 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://images.unsplash.com data:; connect-src 'self'; frame-src 'none'; child-src 'none'; worker-src 'none'; manifest-src 'self'; media-src 'self'; upgrade-insecure-requests" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/styles.css?v=ecosystem-6" />
+  <link rel="stylesheet" href="assets/styles.css?v=contact-api-1" />
   <link rel="icon" href="assets/pitahaya-logo.png" />
   <link rel="stylesheet" href="assets/chatbot.css?v=chat-8" />
 </head>
@@ -86,7 +86,11 @@
 
         <div class="card hover-lift reveal">
           <div class="card-inner">
-            <form class="form" action="mailto:jfmcorp@jfmcorporation.com" method="post" enctype="text/plain" data-lead-form>
+            <form class="form" action="/api/contact" method="post" data-lead-form>
+              <div class="field honeypot" aria-hidden="true">
+                <label for="website">Sitio web</label>
+                <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
+              </div>
               <div class="field"><label for="nombre">Nombre</label><input id="nombre" name="nombre" type="text" placeholder="Tu nombre" required></div>
               <div class="field"><label for="email">Correo electrónico</label><input id="email" name="email" type="email" placeholder="tu@email.com" required></div>
               <div class="field"><label for="negocio">Negocio o marca</label><input id="negocio" name="negocio" type="text" placeholder="Ej: clínica, tienda, consultoría" required></div>
@@ -101,7 +105,7 @@
                 </select>
               </div>
               <div class="field"><label for="mensaje">Mensaje</label><textarea id="mensaje" name="mensaje" placeholder="Cuéntame sobre tu negocio y qué tipo de web necesitas" required></textarea></div>
-              <button class="btn btn-gold" type="submit">Preparar solicitud</button>
+              <button class="btn btn-gold" type="submit">Enviar solicitud</button>
               <p class="form-status" data-form-status hidden></p>
             </form>
           </div>
@@ -148,7 +152,7 @@
     </div>
   </div>
 </footer>
-<script src="assets/app.js?v=contact-1" defer></script>
+<script src="assets/app.js?v=contact-api-1" defer></script>
 <script src="assets/chatbot.js?v=chat-2" defer></script>
 </body>
 </html>

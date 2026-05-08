@@ -1281,6 +1281,14 @@ select:focus-visible{
   transition: width .22s ease;
 }
 .field{ display:grid; gap: 8px; }
+.honeypot{
+  position:absolute;
+  left:-10000px;
+  top:auto;
+  width:1px;
+  height:1px;
+  overflow:hidden;
+}
 label{ font-size: 12px; color: rgba(183,181,173,.92); letter-spacing: .04em; }
 input, textarea, select{
   padding: 12px 14px;
@@ -1312,6 +1320,17 @@ input:focus, textarea:focus, select:focus{
   color: rgba(232,52,135,.96);
   font-size: 13px;
   line-height: 1.5;
+}
+.form-status[data-state="success"]{
+  color: rgba(154,220,119,.96);
+}
+.form-status[data-state="error"]{
+  color: rgba(255,138,138,.96);
+}
+.form.is-sending button[type="submit"],
+button[disabled]{
+  cursor: progress;
+  opacity: .74;
 }
 .contact-options{
   display:grid;

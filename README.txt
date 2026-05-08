@@ -28,3 +28,11 @@ Cada demo es **standalone** (con su propio CSS y tipografía), para que el clien
 ## Chatbot
 - `assets/chatbot.css` y `assets/chatbot.js` añaden la recepcionista virtual de Pitahaya en todas las páginas.
 - El chatbot funciona localmente, recomienda demos/planes y no depende de scripts externos.
+
+## Solicitudes automaticas por email
+- `contacto.html` envia el formulario a `/api/contact`.
+- `api/contact.mjs` envia el email a `jfmcorp@jfmcorporation.com` usando Resend.
+- En Vercel agrega estas Environment Variables:
+  - `RESEND_API_KEY`: API key privada de Resend.
+  - `LEAD_TO_EMAIL`: `jfmcorp@jfmcorporation.com`.
+  - `LEAD_FROM_EMAIL`: email verificado para enviar, por ejemplo `Pitahaya <noreply@jfmcorporation.com>`.

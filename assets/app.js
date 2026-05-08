@@ -321,11 +321,12 @@
     });
   });
 
-  // Static-site lead form: opens a ready-to-send email and gives clear feedback.
+  // Lead form: sends directly through the secure Vercel email function.
   const leadForm = $("[data-lead-form]");
   if (leadForm) {
     const status = $("[data-form-status]", leadForm);
     const fields = $$("[required]", leadForm);
+    const submitButton = $("button[type='submit']", leadForm);
     const meter = make("div", "form-meter");
     const meterText = make("span", "form-meter__text", "Diagnóstico 0% listo");
     const meterTrack = make("span", "form-meter__track");
@@ -346,25 +347,52 @@
     });
     updateFormMeter();
 
-    leadForm.addEventListener("submit", (e) => {
+    const setStatus = (message, state = "info") => {
+      if (!status) return;
+      status.textContent = message;
+      status.dataset.state = state;
+      status.hidden = false;
+    };
+
+    leadForm.addEventListener("submit", async (e) => {
       e.preventDefault();
       const formData = new FormData(leadForm);
-      const name = formData.get("nombre") || "";
-      const email = formData.get("email") || "";
-      const negocio = formData.get("negocio") || "";
-      const plan = formData.get("plan") || "";
-      const mensaje = formData.get("mensaje") || "";
-      const subject = encodeURIComponent("Nueva solicitud de cotización web");
-      const body = encodeURIComponent(
-        `Nombre: ${name}\nCorreo electrónico: ${email}\nNegocio: ${negocio}\nPlan de interés: ${plan}\n\nMensaje:\n${mensaje}`
-      );
+      const payload = Object.fromEntries(formData.entries());
 
-      if (status) {
-        status.textContent = "Perfecto. Se abrirá tu correo con la solicitud lista para enviar a jfmcorp@jfmcorporation.com.";
-        status.hidden = false;
+      leadForm.classList.add("is-sending");
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.textContent = "Enviando...";
       }
+      setStatus("Enviando tu solicitud de forma segura...", "info");
 
-      window.location.href = `mailto:jfmcorp@jfmcorporation.com?subject=${subject}&body=${body}`;
+      try {
+        const response = await fetch(leadForm.action || "/api/contact", {
+          method: "POST",
+          headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(payload)
+        });
+        const result = await response.json().catch(() => ({}));
+
+        if (!response.ok || !result.ok) {
+          throw new Error(result.message || "No se pudo enviar la solicitud.");
+        }
+
+        setStatus("Solicitud enviada. Te responderemos pronto en tu correo.", "success");
+        leadForm.reset();
+        updateFormMeter();
+      } catch (error) {
+        setStatus(error.message || "No se pudo enviar la solicitud. Intenta otra vez.", "error");
+      } finally {
+        leadForm.classList.remove("is-sending");
+        if (submitButton) {
+          submitButton.disabled = false;
+          submitButton.textContent = "Enviar solicitud";
+        }
+      }
     });
   }
 })();
