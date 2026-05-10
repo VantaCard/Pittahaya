@@ -326,7 +326,7 @@
     });
   });
 
-  // Lead form: sends directly through the secure Vercel email function.
+  // Lead form: sends directly through the secure Vercel CRM function.
   const leadForm = $("[data-lead-form]");
   if (leadForm) {
     const status = $("[data-form-status]", leadForm);
@@ -362,7 +362,21 @@
     leadForm.addEventListener("submit", async (e) => {
       e.preventDefault();
       const formData = new FormData(leadForm);
-      const payload = Object.fromEntries(formData.entries());
+      const rawPayload = Object.fromEntries(formData.entries());
+      const payload = {
+        website: rawPayload.website || "",
+        name: rawPayload.name || rawPayload.nombre || "",
+        email: rawPayload.email || "",
+        company: rawPayload.company || rawPayload.negocio || "",
+        service: rawPayload.service || rawPayload.plan || "",
+        plan: rawPayload.crm_plan || "",
+        message: rawPayload.message || rawPayload.mensaje || "",
+        source_page: window.location.href,
+        source_demo: rawPayload.source_demo || "",
+        utm_source: new URLSearchParams(window.location.search).get("utm_source") || "",
+        utm_medium: new URLSearchParams(window.location.search).get("utm_medium") || "",
+        utm_campaign: new URLSearchParams(window.location.search).get("utm_campaign") || ""
+      };
 
       leadForm.classList.add("is-sending");
       if (submitButton) {
@@ -372,7 +386,7 @@
       setStatus("Enviando tu solicitud de forma segura...", "info");
 
       try {
-        const response = await fetch(leadForm.action || "/api/contact", {
+        const response = await fetch(leadForm.action || "/api/submit-lead", {
           method: "POST",
           headers: {
             "Accept": "application/json",
@@ -382,11 +396,12 @@
         });
         const result = await response.json().catch(() => ({}));
 
-        if (!response.ok || !result.ok) {
-          throw new Error(result.message || "No se pudo enviar la solicitud.");
+        const sent = result.ok === true || result.success === true;
+        if (!response.ok || !sent) {
+          throw new Error(result.message || result.error || "No se pudo enviar la solicitud.");
         }
 
-        setStatus("Solicitud enviada. Te responderemos pronto en tu correo.", "success");
+        setStatus(result.message || "Solicitud guardada. Te responderemos pronto en tu correo.", "success");
         leadForm.reset();
         updateFormMeter();
       } catch (error) {
