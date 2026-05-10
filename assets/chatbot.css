@@ -85,8 +85,8 @@
 }
 
 html.js [data-reveal]{
-  opacity:0;
-  transform:translateY(14px);
+  opacity:1;
+  transform:none;
   transition:opacity .75s ease, transform .75s ease;
 }
 
