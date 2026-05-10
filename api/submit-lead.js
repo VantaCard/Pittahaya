@@ -38,6 +38,14 @@ const escapeHtml = (value) =>
 
 const isEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(value || "").toLowerCase());
 
+const parseJsonSafe = (text) => {
+  try {
+    return JSON.parse(text);
+  } catch {
+    return null;
+  }
+};
+
 const sendJson = (res, status, body) => {
   Object.entries(responseHeaders).forEach(([key, value]) => res.setHeader(key, value));
   return res.status(status).json(body);
@@ -125,13 +133,20 @@ const mapLead = (body, req) => {
 
 const insertLead = async (lead) => {
   const supabaseUrl = process.env.SUPABASE_URL;
-  const serviceKey = process.env.SUPABASE_SERVICE_KEY;
+  const serviceKey = process.env.SUPABASE_SERVICE_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
 
   if (!supabaseUrl || !serviceKey) {
     throw new Error("missing_supabase_config");
   }
 
-  const response = await fetch(`${supabaseUrl.replace(/\/$/, "")}/rest/v1/leads`, {
+  let endpoint;
+  try {
+    endpoint = new URL("/rest/v1/leads?select=id", supabaseUrl.replace(/\/$/, ""));
+  } catch {
+    throw new Error("invalid_supabase_url");
+  }
+
+  const response = await fetch(endpoint, {
     method: "POST",
     headers: {
       apikey: serviceKey,
@@ -144,8 +159,27 @@ const insertLead = async (lead) => {
 
   const text = await response.text();
   if (!response.ok) {
-    console.error("Supabase insert failed", response.status, text.slice(0, 500));
-    throw new Error("supabase_insert_failed");
+    const supabaseError = parseJsonSafe(text) || {};
+    const error = new Error("supabase_insert_failed");
+    error.status = response.status;
+    error.supabaseCode = supabaseError.code || "";
+    error.details = String(supabaseError.message || text || "").slice(0, 500);
+
+    if (response.status === 401 || response.status === 403 || error.details.includes("JWT")) {
+      error.message = "supabase_auth_failed";
+    } else if (error.supabaseCode === "42P01" || error.details.toLowerCase().includes("relation") || error.details.toLowerCase().includes("does not exist")) {
+      error.message = "supabase_table_missing";
+    } else if (error.supabaseCode === "PGRST204" || error.details.toLowerCase().includes("column")) {
+      error.message = "supabase_schema_mismatch";
+    }
+
+    console.error("Supabase insert failed", {
+      status: error.status,
+      code: error.supabaseCode,
+      message: error.message,
+      details: error.details
+    });
+    throw error;
   }
 
   const data = text ? JSON.parse(text) : [];
@@ -262,10 +296,20 @@ module.exports = async function handler(req, res) {
     });
   } catch (error) {
     console.error("Lead submission failed", error.message);
-    const message = error.message === "missing_supabase_config"
-      ? "El CRM aun no esta configurado en Vercel."
-      : "No se pudo guardar la solicitud en el CRM. Intenta nuevamente.";
+    const messages = {
+      missing_supabase_config: "El CRM aun no esta configurado en Vercel. Revisa SUPABASE_URL y SUPABASE_SERVICE_KEY.",
+      invalid_supabase_url: "La URL de Supabase en Vercel no parece valida.",
+      supabase_auth_failed: "La llave de Supabase no es correcta. Usa la service_role key en SUPABASE_SERVICE_KEY.",
+      supabase_table_missing: "Falta ejecutar el schema SQL del CRM en Supabase.",
+      supabase_schema_mismatch: "El schema de Supabase no coincide con el CRM. Ejecuta el schema SQL completo."
+    };
+    const message = messages[error.message] || "No se pudo guardar la solicitud en el CRM. Intenta nuevamente.";
 
-    return sendJson(res, 500, { success: false, ok: false, error: message });
+    return sendJson(res, 500, {
+      success: false,
+      ok: false,
+      error: message,
+      error_code: error.message
+    });
   }
 };
