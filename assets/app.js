@@ -1,4 +1,6 @@
 (() => {
+  document.documentElement.classList.add("js");
+
   const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
   const $ = (sel, root=document) => root.querySelector(sel);
   const make = (tag, className, text) => {
@@ -67,7 +69,7 @@
           io.unobserve(ent.target);
         }
       }
-    }, { threshold: 0.12 });
+    }, { threshold: 0.01, rootMargin: "0px 0px 140px 0px" });
     els.forEach(el => io.observe(el));
   } else {
     els.forEach(el => el.classList.add("in"));
@@ -84,6 +86,9 @@
   // Shared footer year. Keeping this here lets CSP block inline scripts.
   const year = $("#y");
   if (year) year.textContent = String(new Date().getFullYear());
+  $$("[data-year]").forEach(el => {
+    el.textContent = String(new Date().getFullYear());
+  });
 
   // Close drawer when clicking a nav link
   $$("#mobileDrawer a").forEach(a => a.addEventListener("click", closeDrawer));

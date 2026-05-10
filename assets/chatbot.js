@@ -1,6 +1,10 @@
 (() => {
   if (document.querySelector("[data-pitahaya-chat]")) return;
 
+  document.querySelectorAll("[data-year]").forEach((el) => {
+    el.textContent = String(new Date().getFullYear());
+  });
+
   const routes = {
     contacto: "contacto.html",
     planes: "planes.html",

@@ -1348,7 +1348,7 @@ button[disabled]{
 
 /* Footer */
 .footer{
-  padding: 34px 0 44px;
+  padding: 34px 0 clamp(128px, 12vw, 172px);
   border-top: 1px solid rgba(255,255,255,.06);
   background: rgba(0,0,0,.10);
 }
@@ -1359,6 +1359,13 @@ button[disabled]{
   align-items:start;
 }
 .footer small{ color: rgba(183,181,173,.88); }
+.footer-legal{
+  max-width: 68ch;
+  margin: 8px 0 0;
+  color: rgba(183,181,173,.72);
+  font-size: 11px;
+  line-height: 1.55;
+}
 .footer-links{
   display:flex; gap: 12px; flex-wrap:wrap; justify-content:flex-end;
 }
@@ -1376,9 +1383,26 @@ button[disabled]{
   color: rgba(243,213,154,.92);
 }
 
+@media (min-width: 981px){
+  .footer-links{
+    padding-right: clamp(230px, 18vw, 300px);
+  }
+}
+
 /* Reveal animations */
-.reveal{ opacity: 0; transform: translateY(14px); transition: opacity .7s ease, transform .7s ease; }
-.reveal.in{ opacity: 1; transform: translateY(0); }
+.reveal{ opacity: 1; transform: none; }
+html.js .reveal{
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity .7s ease, transform .7s ease;
+}
+html.js .reveal.in{ opacity: 1; transform: translateY(0); }
+html.js .hero .reveal,
+html.js main > .section:first-child .reveal{
+  opacity:1;
+  transform:none;
+  transition:none;
+}
 
 @keyframes ecosystem-spin{
   to{ transform: rotate(360deg); }

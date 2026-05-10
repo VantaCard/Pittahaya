@@ -1,4 +1,6 @@
 (() => {
+  document.documentElement.classList.add("js");
+
   const els = Array.from(document.querySelectorAll("[data-reveal]"));
 
   if (!("IntersectionObserver" in window)) {
@@ -11,7 +13,7 @@
           observer.unobserve(entry.target);
         }
       }
-    }, { threshold: 0.12 });
+    }, { threshold: 0.01, rootMargin: "0px 0px 140px 0px" });
 
     els.forEach(el => observer.observe(el));
   }
