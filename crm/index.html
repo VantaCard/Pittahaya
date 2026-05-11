@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pitahaya CRM · Dashboard</title>
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #c9943a;
+    --gold-light: #e8c97a;
+    --gold-dim: rgba(201,148,58,0.15);
+    --onyx: #0d0d0d;
+    --onyx-2: #111111;
+    --onyx-3: #1a1a1a;
+    --onyx-4: #222222;
+    --ash: #888888;
+    --ash-light: #bbb;
+    --border: rgba(255,255,255,0.07);
+    --border-gold: rgba(201,148,58,0.25);
+    --status-new: #3b82f6;
+    --status-contacted: #8b5cf6;
+    --status-qualified: #f59e0b;
+    --status-proposal: #f97316;
+    --status-won: #10b981;
+    --status-lost: #ef4444;
+    --priority-hot: #ef4444;
+    --priority-warm: #f59e0b;
+    --priority-cold: #60a5fa;
+  }
+
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background: var(--onyx);
+    color: #e5e5e5;
+    font-size: 13px;
+    min-height: 100vh;
+  }
+
+  /* ── Sidebar ── */
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 220px;
+    height: 100vh;
+    background: var(--onyx-2);
+    border-right: 1px solid var(--border-gold);
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+    padding: 0 0 24px;
+  }
+
+  .sidebar-brand {
+    padding: 28px 24px 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .sidebar-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 300;
+    color: var(--gold-light);
+    letter-spacing: 0.15em;
+  }
+
+  .sidebar-crm-label {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: var(--ash);
+    margin-top: 4px;
+    text-transform: uppercase;
+  }
+
+  .sidebar-nav {
+    flex: 1;
+    padding: 24px 0;
+  }
+
+  .nav-section-label {
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    color: #444;
+    padding: 0 24px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 24px;
+    color: var(--ash);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    transition: all 0.2s;
+    border-left: 2px solid transparent;
+  }
+
+  .nav-item:hover, .nav-item.active {
+    color: var(--gold-light);
+    border-left-color: var(--gold);
+    background: rgba(201,148,58,0.05);
+  }
+
+  .nav-item svg { opacity: 0.7; flex-shrink: 0; }
+  .nav-item:hover svg, .nav-item.active svg { opacity: 1; }
+
+  .sidebar-footer {
+    padding: 16px 24px 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .btn-logout {
+    width: 100%;
+    padding: 10px;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--ash);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-radius: 1px;
+  }
+  .btn-logout:hover { border-color: var(--border-gold); color: var(--gold-light); }
+
+  /* ── Main content ── */
+  .main {
+    margin-left: 220px;
+    padding: 32px 36px;
+    min-height: 100vh;
+  }
+
+  .page-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 32px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .page-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 300;
+    color: #fff;
+    letter-spacing: 0.05em;
+  }
+
+  .page-subtitle {
+    font-size: 11px;
+    color: var(--ash);
+    margin-top: 4px;
+    letter-spacing: 0.05em;
+  }
+
+  .header-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .btn {
+    padding: 9px 18px;
+    border: 1px solid var(--border-gold);
+    background: transparent;
+    color: var(--gold);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-radius: 1px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .btn:hover { background: var(--gold-dim); }
+  .btn-primary { background: var(--gold-dim); }
+
+  /* ── Metric cards ── */
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  .metric-card {
+    background: var(--onyx-3);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 20px 24px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .metric-card:hover { border-color: var(--border-gold); }
+
+  .metric-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: var(--gold);
+    opacity: 0.4;
+  }
+
+  .metric-label {
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--ash);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .metric-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 300;
+    color: var(--gold-light);
+    line-height: 1;
+  }
+
+  .metric-sub {
+    font-size: 11px;
+    color: var(--ash);
+    margin-top: 6px;
+  }
+
+  /* ── Filters ── */
+  .filters-bar {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+
+  .search-wrap {
+    position: relative;
+    flex: 1;
+    min-width: 200px;
+  }
+  .search-wrap svg {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--ash);
+    pointer-events: none;
+  }
+
+  input[type="text"], select {
+    background: var(--onyx-3);
+    border: 1px solid var(--border);
+    color: #e5e5e5;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    padding: 9px 12px;
+    border-radius: 1px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .search-wrap input { width: 100%; padding-left: 36px; }
+  input[type="text"]:focus, select:focus { border-color: var(--border-gold); }
+  select { padding-right: 28px; cursor: pointer; }
+  select option { background: var(--onyx-3); }
+
+  /* ── Leads table ── */
+  .table-wrap {
+    background: var(--onyx-3);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  thead {
+    background: var(--onyx-4);
+    border-bottom: 1px solid var(--border-gold);
+  }
+
+  th {
+    padding: 12px 16px;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--ash);
+    text-transform: uppercase;
+    font-weight: 500;
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  td {
+    padding: 14px 16px;
+    font-size: 12px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+  }
+
+  tr:last-child td { border-bottom: none; }
+
+  tr:hover td { background: rgba(255,255,255,0.02); }
+
+  .lead-name {
+    font-weight: 500;
+    color: #fff;
+    font-size: 13px;
+  }
+
+  .lead-email {
+    color: var(--ash);
+    font-size: 11px;
+    margin-top: 2px;
+  }
+
+  .lead-company {
+    color: var(--ash-light);
+    font-size: 11px;
+  }
+
+  /* Status badges */
+  .badge {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 1px;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  .badge-new        { background: rgba(59,130,246,0.15); color: #60a5fa; }
+  .badge-contacted  { background: rgba(139,92,246,0.15); color: #a78bfa; }
+  .badge-qualified  { background: rgba(245,158,11,0.15); color: #fbbf24; }
+  .badge-proposal   { background: rgba(249,115,22,0.15); color: #fb923c; }
+  .badge-won        { background: rgba(16,185,129,0.15); color: #34d399; }
+  .badge-lost       { background: rgba(239,68,68,0.15);  color: #f87171; }
+
+  .dot {
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .dot-hot  { background: var(--priority-hot); box-shadow: 0 0 6px rgba(239,68,68,0.5); }
+  .dot-warm { background: var(--priority-warm); }
+  .dot-cold { background: var(--priority-cold); }
+
+  .priority-cell {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    text-transform: capitalize;
+  }
+
+  .date-cell { color: var(--ash); font-size: 11px; }
+
+  .action-link {
+    color: var(--gold);
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+  }
+  .action-link:hover { opacity: 1; }
+
+  /* ── Pagination ── */
+  .pagination {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-top: 1px solid var(--border);
+    background: var(--onyx-4);
+  }
+  .pagination-info { font-size: 11px; color: var(--ash); }
+  .pagination-btns { display: flex; gap: 6px; }
+  .page-btn {
+    padding: 6px 12px;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--ash);
+    font-size: 11px;
+    cursor: pointer;
+    border-radius: 1px;
+    font-family: 'Montserrat', sans-serif;
+    transition: all 0.2s;
+  }
+  .page-btn:hover:not(:disabled) { border-color: var(--border-gold); color: var(--gold); }
+  .page-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+  /* ── Loading & empty ── */
+  .loading { text-align: center; padding: 48px; color: var(--ash); }
+  .loading-spinner {
+    width: 24px; height: 24px;
+    border: 1px solid var(--border-gold);
+    border-top-color: var(--gold);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 16px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .empty { text-align: center; padding: 48px; color: var(--ash); }
+
+  /* ── Charts row ── */
+  .charts-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .chart-card {
+    background: var(--onyx-3);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 20px 24px;
+  }
+  .chart-title {
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--ash);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .bar-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .bar-label { font-size: 11px; color: var(--ash-light); min-width: 100px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .bar-track { flex: 1; background: var(--onyx-4); border-radius: 1px; height: 6px; overflow: hidden; }
+  .bar-fill  { height: 100%; background: var(--gold); border-radius: 1px; transition: width 0.5s ease; }
+  .bar-count { font-size: 11px; color: var(--ash); min-width: 24px; text-align: right; }
+</style>
+</head>
+<body>
+
+<!-- ── Sidebar ── -->
+<nav class="sidebar">
+  <div class="sidebar-brand">
+    <div class="sidebar-logo">Pitahaya</div>
+    <div class="sidebar-crm-label">CRM · Panel Admin</div>
+  </div>
+  <div class="sidebar-nav">
+    <div class="nav-section-label" style="margin-top:8px;">Navegación</div>
+    <a href="/crm/index.html" class="nav-item active">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      Dashboard
+    </a>
+    <a href="#" class="nav-item" onclick="filterStatus('new'); return false;">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12l7-7 7 7"/></svg>
+      Nuevos leads
+    </a>
+    <a href="#" class="nav-item" onclick="filterStatus('hot'); return false;">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2c0 6-6 8-6 14a6 6 0 0012 0c0-6-6-8-6-14z"/></svg>
+      Leads calientes
+    </a>
+    <a href="#" class="nav-item" onclick="filterStatus('won'); return false;">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 6L9 17l-5-5"/></svg>
+      Ganados
+    </a>
+  </div>
+  <div class="sidebar-footer">
+    <button class="btn-logout" onclick="logout()">Cerrar sesión</button>
+  </div>
+</nav>
+
+<!-- ── Main ── -->
+<main class="main">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Dashboard</h1>
+      <p class="page-subtitle" id="lastUpdated">Cargando datos...</p>
+    </div>
+    <div class="header-actions">
+      <button class="btn" onclick="exportCSV()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+        Exportar CSV
+      </button>
+      <button class="btn btn-primary" onclick="loadLeads()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
+        Actualizar
+      </button>
+    </div>
+  </div>
+
+  <!-- Metrics -->
+  <div class="metrics-grid" id="metricsGrid">
+    <div class="metric-card"><div class="metric-label">Total Leads</div><div class="metric-value" id="m-total">—</div></div>
+    <div class="metric-card"><div class="metric-label">Nuevos esta semana</div><div class="metric-value" id="m-week">—</div></div>
+    <div class="metric-card"><div class="metric-label">Leads calientes</div><div class="metric-value" id="m-hot">—</div><div class="metric-sub">Requieren acción</div></div>
+    <div class="metric-card"><div class="metric-label">Tasa de conversión</div><div class="metric-value" id="m-conv">—</div><div class="metric-sub" id="m-service">—</div></div>
+  </div>
+
+  <!-- Charts -->
+  <div class="charts-row">
+    <div class="chart-card">
+      <div class="chart-title">Leads por servicio (30 días)</div>
+      <div id="chartService"></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Leads por estado</div>
+      <div id="chartStatus"></div>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="filters-bar">
+    <div class="search-wrap">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="searchInput" placeholder="Buscar por nombre, email, empresa..." oninput="debounceSearch()">
+    </div>
+    <select id="filterStatus" onchange="loadLeads()">
+      <option value="">Todos los estados</option>
+      <option value="new">Nuevo</option>
+      <option value="contacted">Contactado</option>
+      <option value="qualified">Calificado</option>
+      <option value="proposal_sent">Propuesta enviada</option>
+      <option value="won">Ganado</option>
+      <option value="lost">Perdido</option>
+    </select>
+    <select id="filterPriority" onchange="loadLeads()">
+      <option value="">Toda prioridad</option>
+      <option value="hot">🔥 Caliente</option>
+      <option value="warm">🌡️ Tibio</option>
+      <option value="cold">❄️ Frío</option>
+    </select>
+    <select id="filterService" onchange="loadLeads()">
+      <option value="">Todos los servicios</option>
+      <option value="Landing page">Landing page</option>
+      <option value="E-commerce">E-commerce</option>
+      <option value="Sitio web">Sitio web</option>
+      <option value="Portafolio">Portafolio</option>
+      <option value="Rediseño">Rediseño</option>
+    </select>
+  </div>
+
+  <!-- Table -->
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Cliente</th>
+          <th>Empresa</th>
+          <th>Servicio</th>
+          <th>Estado</th>
+          <th>Prioridad</th>
+          <th>Fuente</th>
+          <th>Fecha</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="leadsBody">
+        <tr><td colspan="8"><div class="loading"><div class="loading-spinner"></div>Cargando leads...</div></td></tr>
+      </tbody>
+    </table>
+    <div class="pagination">
+      <span class="pagination-info" id="paginationInfo"></span>
+      <div class="pagination-btns">
+        <button class="page-btn" id="prevBtn" onclick="prevPage()">← Anterior</button>
+        <button class="page-btn" id="nextBtn" onclick="nextPage()">Siguiente →</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+if (window.trustedTypes && window.trustedTypes.createPolicy) {
+  try {
+    window.trustedTypes.createPolicy('default', {
+      createHTML: (value) => value,
+      createScript: (value) => value,
+      createScriptURL: (value) => value
+    });
+  } catch {}
+}
+
+// ── Config ────────────────────────────────────────────────────
+const API_BASE        = '/api/crm';
+const PAGE_SIZE       = 25;
+
+let sb;
+
+let currentPage = 0;
+let totalLeads  = 0;
+let authToken   = null;
+let searchTimer = null;
+
+async function loadCrmConfig() {
+  const res = await fetch('/api/crm-config', { headers: { 'Accept': 'application/json' } });
+  const config = await res.json().catch(() => ({}));
+  if (!res.ok || !config.supabaseUrl || !config.supabaseAnonKey) {
+    throw new Error(config.error || 'CRM no configurado en Vercel.');
+  }
+  return config;
+}
+
+// ── Auth ──────────────────────────────────────────────────────
+async function init() {
+  const config = await loadCrmConfig();
+  const { createClient } = supabase;
+  sb = createClient(config.supabaseUrl, config.supabaseAnonKey);
+
+  const { data: { session } } = await sb.auth.getSession();
+  if (!session) { window.location.href = '/crm/login.html'; return; }
+  authToken = session.access_token;
+  await Promise.all([loadMetrics(), loadLeads()]);
+}
+
+async function logout() {
+  await sb.auth.signOut();
+  window.location.href = '/crm/login.html';
+}
+
+// ── API helper ────────────────────────────────────────────────
+async function api(params, method = 'GET', body = null) {
+  const url = API_BASE + '?' + new URLSearchParams(params);
+  const opts = {
+    method,
+    headers: { 'Authorization': `Bearer ${authToken}`, 'Content-Type': 'application/json' },
+  };
+  if (body) opts.body = JSON.stringify(body);
+  const res = await fetch(url, opts);
+  if (!res.ok) throw new Error(await res.text());
+  return res.json();
+}
+
+// ── Metrics ───────────────────────────────────────────────────
+async function loadMetrics() {
+  try {
+    const d = await api({ action: 'metrics' });
+    document.getElementById('m-total').textContent = d.total || 0;
+    document.getElementById('m-week').textContent  = d.newThisWeek || 0;
+    document.getElementById('m-hot').textContent   = d.hot || 0;
+    document.getElementById('m-conv').textContent  = (d.conversionRate || 0) + '%';
+    document.getElementById('m-service').textContent = d.topService ? `Más pedido: ${d.topService}` : '';
+
+    renderBarChart('chartService', d.serviceCounts, '#c9943a');
+    renderBarChart('chartStatus',  d.statusCounts,  '#6366f1');
+
+    const now = new Date();
+    document.getElementById('lastUpdated').textContent =
+      `Actualizado: ${now.toLocaleTimeString('es-EC', {hour:'2-digit', minute:'2-digit'})}`;
+  } catch(e) { console.error('Metrics error:', e); }
+}
+
+function renderBarChart(containerId, data, color) {
+  const el = document.getElementById(containerId);
+  if (!data || !Object.keys(data).length) { el.innerHTML = '<div style="color:var(--ash);font-size:11px;padding:8px 0;">Sin datos suficientes</div>'; return; }
+  const sorted = Object.entries(data).sort((a,b) => b[1]-a[1]).slice(0, 6);
+  const max = Math.max(...sorted.map(e=>e[1]), 1);
+  el.innerHTML = sorted.map(([label, count]) => `
+    <div class="bar-row">
+      <div class="bar-label" title="${label}">${label}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${Math.round(count/max*100)}%;background:${color}"></div></div>
+      <div class="bar-count">${count}</div>
+    </div>
+  `).join('');
+}
+
+// ── Leads list ────────────────────────────────────────────────
+async function loadLeads() {
+  const tbody = document.getElementById('leadsBody');
+  tbody.innerHTML = '<tr><td colspan="8"><div class="loading"><div class="loading-spinner"></div>Cargando...</div></td></tr>';
+
+  const params = {
+    action: 'leads',
+    limit: PAGE_SIZE,
+    offset: currentPage * PAGE_SIZE,
+    sort: 'created_at',
+    order: 'desc',
+  };
+  const search   = document.getElementById('searchInput')?.value.trim();
+  const status   = document.getElementById('filterStatus')?.value;
+  const priority = document.getElementById('filterPriority')?.value;
+  const service  = document.getElementById('filterService')?.value;
+  if (search)   params.search   = search;
+  if (status)   params.status   = status;
+  if (priority) params.priority = priority;
+  if (service)  params.service  = service;
+
+  try {
+    const { leads, total } = await api(params);
+    totalLeads = total;
+
+    if (!leads || leads.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="8"><div class="empty">No se encontraron leads con los filtros seleccionados.</div></td></tr>';
+      updatePagination();
+      return;
+    }
+
+    tbody.innerHTML = leads.map(l => `
+      <tr>
+        <td>
+          <div class="lead-name">${esc(l.name)}</div>
+          <div class="lead-email">${esc(l.email)}</div>
+        </td>
+        <td class="lead-company">${esc(l.company) || '—'}</td>
+        <td>${esc(l.service) || '<span style="color:var(--ash)">—</span>'}</td>
+        <td><span class="badge badge-${l.status}">${statusLabel(l.status)}</span></td>
+        <td>
+          <div class="priority-cell">
+            <span class="dot dot-${l.priority}"></span>
+            ${l.priority}
+          </div>
+        </td>
+        <td class="date-cell" style="max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${esc(l.source_page) || ''}">${shortUrl(l.source_page)}</td>
+        <td class="date-cell">${formatDate(l.created_at)}</td>
+        <td><a href="/crm/lead.html?id=${l.id}" class="action-link">Ver →</a></td>
+      </tr>
+    `).join('');
+
+    updatePagination();
+  } catch(e) {
+    tbody.innerHTML = `<tr><td colspan="8"><div class="empty">Error al cargar leads: ${e.message}</div></td></tr>`;
+  }
+}
+
+function updatePagination() {
+  const start = currentPage * PAGE_SIZE + 1;
+  const end   = Math.min((currentPage + 1) * PAGE_SIZE, totalLeads);
+  document.getElementById('paginationInfo').textContent = totalLeads > 0
+    ? `Mostrando ${start}–${end} de ${totalLeads} leads`
+    : '0 resultados';
+  document.getElementById('prevBtn').disabled = currentPage === 0;
+  document.getElementById('nextBtn').disabled = end >= totalLeads;
+}
+
+function prevPage() { if (currentPage > 0) { currentPage--; loadLeads(); } }
+function nextPage() { currentPage++; loadLeads(); }
+
+function debounceSearch() {
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(() => { currentPage = 0; loadLeads(); }, 400);
+}
+
+function filterStatus(val) {
+  document.getElementById('filterStatus').value = val;
+  currentPage = 0;
+  loadLeads();
+}
+
+// ── Export ────────────────────────────────────────────────────
+async function exportCSV() {
+  const url = `${API_BASE}?action=export`;
+  const res = await fetch(url, { headers: { 'Authorization': `Bearer ${authToken}` } });
+  if (!res.ok) { alert('Error al exportar'); return; }
+  const blob = await res.blob();
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `pitahaya-leads-${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+}
+
+// ── Helpers ───────────────────────────────────────────────────
+function esc(s) {
+  if (!s) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function statusLabel(s) {
+  return { new:'Nuevo', contacted:'Contactado', qualified:'Calificado', proposal_sent:'Propuesta', won:'Ganado', lost:'Perdido' }[s] || s;
+}
+
+function formatDate(iso) {
+  if (!iso) return '—';
+  const d = new Date(iso);
+  return d.toLocaleDateString('es-EC', { day:'2-digit', month:'short', year:'numeric' });
+}
+
+function shortUrl(url) {
+  if (!url) return '—';
+  try { return new URL(url).pathname; } catch { return url.slice(0, 20); }
+}
+
+init().catch((e) => {
+  document.getElementById('leadsBody').innerHTML =
+    `<tr><td colspan="8"><div class="empty">Error al iniciar CRM: ${esc(e.message)}</div></td></tr>`;
+});
+</script>
+</body>
+</html>

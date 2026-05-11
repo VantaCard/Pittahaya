@@ -32,6 +32,9 @@ Cada demo es **standalone** (con su propio CSS y tipografía), para que el clien
 ## Solicitudes automaticas y CRM
 - `contacto.html` envia el formulario a `/api/submit-lead`.
 - `api/submit-lead.js` guarda el lead en Supabase CRM y envia notificacion a `jfmcorp@jfmcorporation.com` usando Resend.
+- `api/crm.js` protege el dashboard CRM con login de Supabase y allowlist de admins.
+- `api/crm-config.js` entrega al navegador solo la URL publica y anon key de Supabase para iniciar sesion.
+- `crm/login.html`, `crm/index.html` y `crm/lead.html` forman el panel CRM.
 - `api/contact.mjs` queda como handler anterior de email por si se necesita fallback.
 - Antes de probar en produccion, ejecuta el archivo `sql/schema.sql` del CRM limpio en Supabase SQL Editor para crear `leads`, `lead_notes`, `lead_tasks` y `rate_limits`.
 - En Vercel agrega estas Environment Variables:
@@ -39,5 +42,9 @@ Cada demo es **standalone** (con su propio CSS y tipografía), para que el clien
   - `LEAD_TO_EMAIL`: `jfmcorp@jfmcorporation.com`.
   - `LEAD_FROM_EMAIL`: email verificado para enviar, por ejemplo `Pitahaya <noreply@jfmcorporation.com>`.
   - `SUPABASE_URL`: URL del proyecto Supabase del CRM.
+  - `NEXT_PUBLIC_SUPABASE_URL`: la misma URL de Supabase, usada por el login del CRM.
+  - `SUPABASE_ANON_KEY`: anon/public key de Supabase para login.
+  - `NEXT_PUBLIC_SUPABASE_ANON_KEY`: la misma anon/public key de Supabase.
   - `SUPABASE_SERVICE_KEY`: service role key privada de Supabase, nunca anon/public key.
   - Si tu proyecto la llama `SUPABASE_SERVICE_ROLE_KEY`, tambien funciona como alternativa.
+  - `CRM_ADMIN_EMAILS`: correos permitidos para entrar al CRM, por ejemplo `jfmcorp@jfmcorporation.com`.

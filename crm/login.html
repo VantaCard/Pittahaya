@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pitahaya CRM · Acceso</title>
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #c9943a;
+    --gold-light: #e8c97a;
+    --onyx: #0d0d0d;
+    --onyx-2: #161616;
+    --onyx-3: #1e1e1e;
+    --ash: #888888;
+    --parchment: #f5f0e8;
+    --error: #c0392b;
+  }
+
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background: var(--onyx);
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Decorative background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 0%, rgba(201,148,58,0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 80% 80%, rgba(201,148,58,0.04) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  /* Pitahaya geometric accent */
+  body::after {
+    content: '';
+    position: fixed;
+    top: -200px; right: -200px;
+    width: 600px; height: 600px;
+    border: 1px solid rgba(201,148,58,0.08);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .login-card {
+    width: 100%;
+    max-width: 420px;
+    padding: 56px 48px;
+    background: var(--onyx-2);
+    border: 1px solid rgba(201,148,58,0.2);
+    border-radius: 2px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Corner accents */
+  .login-card::before, .login-card::after {
+    content: '';
+    position: absolute;
+    width: 20px; height: 20px;
+    border-color: var(--gold);
+    border-style: solid;
+  }
+  .login-card::before { top: -1px; left: -1px; border-width: 1px 0 0 1px; }
+  .login-card::after  { bottom: -1px; right: -1px; border-width: 0 1px 1px 0; }
+
+  .brand {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .brand-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    color: var(--gold-light);
+    text-transform: uppercase;
+  }
+
+  .brand-sub {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: var(--ash);
+    margin-top: 6px;
+    text-transform: uppercase;
+  }
+
+  .divider {
+    width: 40px;
+    height: 1px;
+    background: var(--gold);
+    margin: 20px auto;
+    opacity: 0.5;
+  }
+
+  .form-group {
+    margin-bottom: 24px;
+  }
+
+  label {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ash);
+    margin-bottom: 10px;
+  }
+
+  input[type="email"],
+  input[type="password"] {
+    width: 100%;
+    padding: 14px 16px;
+    background: var(--onyx-3);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 1px;
+    color: #fff;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  input:focus {
+    border-color: rgba(201,148,58,0.5);
+  }
+
+  input::placeholder {
+    color: #444;
+  }
+
+  .btn-login {
+    width: 100%;
+    padding: 16px;
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold-light);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 8px;
+    border-radius: 1px;
+  }
+
+  .btn-login:hover {
+    background: var(--gold);
+    color: var(--onyx);
+  }
+
+  .btn-login:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .error-msg {
+    margin-top: 16px;
+    padding: 12px 16px;
+    background: rgba(192,57,43,0.1);
+    border: 1px solid rgba(192,57,43,0.3);
+    color: #e87676;
+    font-size: 12px;
+    display: none;
+  }
+
+  .error-msg.show {
+    display: block;
+  }
+
+  .security-note {
+    text-align: center;
+    font-size: 10px;
+    color: #444;
+    margin-top: 32px;
+    letter-spacing: 0.05em;
+  }
+</style>
+</head>
+<body>
+
+<div class="login-card">
+  <div class="brand">
+    <div class="brand-name">Pitahaya</div>
+    <div class="brand-sub">Panel de Administración</div>
+    <div class="divider"></div>
+  </div>
+
+  <form id="loginForm">
+    <div class="form-group">
+      <label for="email">Correo electrónico</label>
+      <input type="email" id="email" placeholder="admin@pitahaya.ec" required autocomplete="email">
+    </div>
+    <div class="form-group">
+      <label for="password">Contraseña</label>
+      <input type="password" id="password" placeholder="••••••••" required autocomplete="current-password">
+    </div>
+    <button type="submit" class="btn-login" id="loginBtn">
+      Ingresar al CRM
+    </button>
+    <div class="error-msg" id="errorMsg"></div>
+  </form>
+
+  <div class="security-note">Acceso restringido · Solo administradores</div>
+</div>
+
+<script>
+  if (window.trustedTypes && window.trustedTypes.createPolicy) {
+    try {
+      window.trustedTypes.createPolicy('default', {
+        createHTML: (value) => value,
+        createScript: (value) => value,
+        createScriptURL: (value) => value
+      });
+    } catch {}
+  }
+
+  let sb;
+
+  async function loadCrmConfig() {
+    const res = await fetch('/api/crm-config', { headers: { 'Accept': 'application/json' } });
+    const config = await res.json().catch(() => ({}));
+    if (!res.ok || !config.supabaseUrl || !config.supabaseAnonKey) {
+      throw new Error(config.error || 'CRM no configurado en Vercel.');
+    }
+    return config;
+  }
+
+  async function bootLogin() {
+    const config = await loadCrmConfig();
+    const { createClient } = supabase;
+    sb = createClient(config.supabaseUrl, config.supabaseAnonKey);
+
+    // If already logged in, redirect to dashboard
+    const { data: { session } } = await sb.auth.getSession();
+    if (session) window.location.href = '/crm/index.html';
+
+    document.getElementById('loginForm').addEventListener('submit', handleLogin);
+  }
+
+  async function handleLogin(e) {
+    e.preventDefault();
+    const btn = document.getElementById('loginBtn');
+    const errEl = document.getElementById('errorMsg');
+    errEl.classList.remove('show');
+    btn.disabled = true;
+    btn.textContent = 'Verificando...';
+
+    const email    = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+
+    const { data, error } = await sb.auth.signInWithPassword({ email, password });
+
+    if (error || !data.session) {
+      errEl.textContent = 'Credenciales incorrectas. Verifica tu email y contraseña.';
+      errEl.classList.add('show');
+      btn.disabled = false;
+      btn.textContent = 'Ingresar al CRM';
+      return;
+    }
+
+    window.location.href = '/crm/index.html';
+  }
+
+  bootLogin().catch((error) => {
+    const errEl = document.getElementById('errorMsg');
+    errEl.textContent = error.message || 'No se pudo cargar el CRM.';
+    errEl.classList.add('show');
+    document.getElementById('loginBtn').disabled = true;
+  });
+</script>
+</body>
+</html>
