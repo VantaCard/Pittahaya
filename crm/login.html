@@ -268,7 +268,11 @@
     const { data, error } = await sb.auth.signInWithPassword({ email, password });
 
     if (error || !data.session) {
-      errEl.textContent = 'Credenciales incorrectas. Verifica tu email y contraseña.';
+      console.error('CRM login error:', error);
+      const detail = error?.message || 'No se pudo iniciar sesión.';
+      errEl.textContent = detail.includes('Invalid login credentials')
+        ? 'Credenciales incorrectas. Verifica que estés usando el correo y la clave del mismo proyecto Supabase.'
+        : `No se pudo entrar: ${detail}`;
       errEl.classList.add('show');
       btn.disabled = false;
       btn.textContent = 'Ingresar al CRM';

@@ -46,6 +46,12 @@ const parseJsonSafe = (text) => {
   }
 };
 
+const normalizeSupabaseUrl = (value) =>
+  String(value || "")
+    .trim()
+    .replace(/\/+$/, "")
+    .replace(/\/(?:rest|auth)\/v1$/, "");
+
 const sendJson = (res, status, body) => {
   Object.entries(responseHeaders).forEach(([key, value]) => res.setHeader(key, value));
   return res.status(status).json(body);
@@ -132,7 +138,7 @@ const mapLead = (body, req) => {
 };
 
 const insertLead = async (lead) => {
-  const supabaseUrl = process.env.SUPABASE_URL;
+  const supabaseUrl = normalizeSupabaseUrl(process.env.SUPABASE_URL);
   const serviceKey = process.env.SUPABASE_SERVICE_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
 
   if (!supabaseUrl || !serviceKey) {
