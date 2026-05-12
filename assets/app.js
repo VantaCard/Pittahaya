@@ -11,6 +11,7 @@
   };
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const finePointer = window.matchMedia("(pointer: fine)").matches;
+  const mobileContent = window.matchMedia("(max-width: 680px)");
 
   // Premium interaction layer: all local, no tracking, no external scripts.
   const progress = make("div", "scroll-progress");
@@ -90,6 +91,105 @@
     el.textContent = String(new Date().getFullYear());
   });
 
+  const mobileCopyByPage = {
+    "index.html": [
+      [".hero h1", "Tu web vende."],
+      [".hero p", "Diseño web premium, claro y listo para convertir visitas en clientes."],
+      ["#first-impression-lab .section-title", "Elige la primera impresión correcta"],
+      ["#first-impression-lab .section-lead", "Toca una dirección y mira qué estrategia encaja con tu marca."],
+      ["#problema-solucion .section-title", "Tu cliente decide rápido"],
+      ["#problema-solucion .section-lead", "Una web premium sube la percepción antes del primer mensaje."],
+      ["#servicios .section-title", "Servicios claros para vender mejor"],
+      ["#servicios .section-lead", "Todo se diseña para explicar rápido, verse premium y llevar al contacto."],
+      ["#planes .section-title", "Planes simples, look premium"],
+      ["#planes .section-lead", "Elige el nivel que tu negocio necesita hoy."],
+      ["#planes .price:nth-child(1) .plan-note", "Base profesional para recibir contactos."],
+      ["#planes .price:nth-child(2) .plan-note", "Servicios, prueba y ruta clara a cotización."],
+      ["#planes .price:nth-child(3) .plan-note", "Experiencia memorable y de alta percepción."],
+      ["#como-funciona .section-title", "Proceso simple"],
+      ["#como-funciona .section-lead", "De idea a web lista para compartir y vender."],
+      ["#portafolio .section-title", "Mira demos y elige una dirección"],
+      ["#portafolio .section-lead", "Cada demo muestra una forma distinta de vender y generar confianza."],
+      [".conversion-panel .section-title", "Haz que tu web se sienta más valiosa."],
+      [".conversion-panel p", "Cuéntame qué vendes y te doy una dirección clara."]
+    ],
+    "servicios.html": [
+      [".section > .container > .section-title", "Servicios web premium"],
+      [".section > .container > .section-lead", "Menos ruido, más claridad: una web pensada para generar confianza y contactos."],
+      [".grid-2 .section-title", "Minimalista, pero con intención"],
+      [".grid-2 .section-lead", "Diseño limpio, mensajes claros y botones que llevan al contacto."]
+    ],
+    "planes.html": [
+      [".section > .container > .section-title", "Elige tu plan."],
+      [".section > .container > .section-lead", "Planes simples para verte mejor y convertir más."],
+      [".pricing .price:nth-child(1) .plan-note", "Base profesional para recibir contactos."],
+      [".pricing .price:nth-child(2) .plan-note", "Servicios, prueba y ruta clara a cotización."],
+      [".pricing .price:nth-child(3) .plan-note", "Experiencia memorable y de alta percepción."],
+      ["[data-plan-finder] .section-title", "Te digo qué plan elegir"],
+      ["[data-plan-finder] .section-lead", "Selecciona tu objetivo y recibe una recomendación."],
+      [".hr + .section-title", "Cómo avanzamos"],
+      [".hr + .section-title + .section-lead", "Un proceso directo, sin complicarte."]
+    ],
+    "portafolio.html": [
+      [".section > .container > .section-title", "Demos para tu web."],
+      [".section > .container > .section-lead", "Mira demos rápidas: ventas, confianza, marca, tecnología o lujo."],
+      [".conversion-panel .section-title", "¿Esta dirección encaja?"],
+      [".conversion-panel p", "La adaptamos a tu producto, clientes y forma de vender."]
+    ],
+    "sobre-mi.html": [
+      [".section > .container > .section-title", "Tu marca, más premium."],
+      [".section > .container > .section-lead", "Tu marca puede sentirse premium, clara y fácil de recordar."],
+      [".grid-2 .section-title", "Que tu marca se sienta más valiosa"],
+      [".grid-2 .section-lead", "Creo webs modernas para que tu negocio se vea mejor y convierta con claridad."],
+      [".section-title[style]", "Por qué funciona"]
+    ],
+    "contacto.html": [
+      [".section > .container > .section-title", "Diagnóstico gratis."],
+      [".section > .container > .section-lead", "Completa el formulario y recibe una dirección clara para tu web."],
+      [".grid-2 .section-title", "Diagnóstico gratis"],
+      [".grid-2 .section-lead", "Mientras más claro seas, mejor te puedo orientar."],
+      [".contact-option:nth-child(1) span", "Ruta recomendada y siguiente paso."],
+      [".contact-option:nth-child(2) span", "Para negocios que quieren verse más premium."],
+      [".contact-option:nth-child(3) span", "Respuesta enfocada y directa."],
+      [".card .grid-2 .section-title", "Una web que se vea real"],
+      [".card .grid-2 .section-lead", "Premium, clara y lista para competir."]
+    ]
+  };
+
+  const applyMobileCopy = () => {
+    const current = (location.pathname.split("/").pop() || "index.html").toLowerCase();
+    const copies = mobileCopyByPage[current] || [];
+
+    copies.forEach(([selector, text]) => {
+      if (!text) return;
+      const el = $(selector);
+      if (!el) return;
+      if (!el.dataset.desktopText) el.dataset.desktopText = el.textContent;
+      el.textContent = mobileContent.matches ? text : el.dataset.desktopText;
+    });
+  };
+
+  applyMobileCopy();
+  if (mobileContent.addEventListener) {
+    mobileContent.addEventListener("change", applyMobileCopy);
+  } else {
+    mobileContent.addListener(applyMobileCopy);
+  }
+
+  const copyForViewport = (data, key) => {
+    if (!data) return "";
+    const mobileKey = `mobile${key.charAt(0).toUpperCase()}${key.slice(1)}`;
+    return mobileContent.matches && data[mobileKey] ? data[mobileKey] : data[key];
+  };
+
+  const onMobileContentChange = (callback) => {
+    if (mobileContent.addEventListener) {
+      mobileContent.addEventListener("change", callback);
+    } else {
+      mobileContent.addListener(callback);
+    }
+  };
+
   // Close drawer when clicking a nav link
   $$("#mobileDrawer a").forEach(a => a.addEventListener("click", closeDrawer));
 
@@ -131,21 +231,27 @@
     conversion: {
       eyebrow: "Cliente listo para comprar",
       title: "Venta inmediata sin sentirse desesperado.",
+      mobileTitle: "Venta clara y rápida.",
       body: "Ideal para una oferta concreta: el visitante entiende el resultado, ve prueba, resuelve dudas y llega al contacto con momentum.",
+      mobileBody: "El cliente entiende la oferta y llega al contacto sin vueltas.",
       cta: "Ver demo de conversión",
       href: "demo-landing.html"
     },
     authority: {
       eyebrow: "Marca seria en segundos",
       title: "Confianza ejecutiva antes de hablar de precio.",
+      mobileTitle: "Confianza antes del precio.",
       body: "Perfecto para empresas, consultoras y servicios B2B que necesitan verse sólidos, ordenados y listos para contratos importantes.",
+      mobileBody: "Para empresas que necesitan verse sólidas desde el primer vistazo.",
       cta: "Ver demo corporativa",
       href: "demo-corporativa.html"
     },
     desire: {
       eyebrow: "Deseo visual premium",
       title: "Una web que se recuerda como una marca de alto valor.",
+      mobileTitle: "Una marca que se recuerda.",
       body: "Para marcas creativas o high-end que venden percepción: textura, ritmo, color, lujo, voz y una experiencia que se queda en la memoria.",
+      mobileBody: "Para marcas que venden percepción, deseo y estética premium.",
       cta: "Ver demos memorables",
       href: "portafolio.html"
     }
@@ -155,9 +261,12 @@
     impact: {
       kicker: "Sistema de primera impresión",
       title: "Impacto visual antes de que el cliente piense.",
+      mobileTitle: "Impacto antes del scroll.",
       body: "La página abre con una señal premium inmediata: color, contraste, logo y mensaje trabajan juntos para detener el scroll.",
+      mobileBody: "Logo, color y mensaje detienen la atención rápido.",
       label: "Primera impresión",
       screen: "Tu marca se ve imposible de ignorar.",
+      mobileScreen: "Tu marca se ve premium.",
       score: "92%",
       path: "4 pasos",
       signal: "24/7"
@@ -165,9 +274,12 @@
     desire: {
       kicker: "Sistema de deseo",
       title: "La oferta se siente más valiosa sin explicar de más.",
+      mobileTitle: "Tu oferta se siente más valiosa.",
       body: "El ritmo visual convierte servicios comunes en una experiencia aspiracional: el cliente siente calidad antes de pedir precio.",
+      mobileBody: "El cliente siente calidad antes de pedir precio.",
       label: "Deseo construido",
       screen: "Tu producto se percibe premium.",
+      mobileScreen: "Más deseo, menos explicación.",
       score: "+38%",
       path: "Más interés",
       signal: "Look premium"
@@ -175,9 +287,12 @@
     trust: {
       kicker: "Sistema de confianza",
       title: "Cada bloque responde una duda antes de que se vuelva objeción.",
+      mobileTitle: "Confianza sin explicar de más.",
       body: "Prueba, proceso, claridad y seguridad visual hacen que avanzar se sienta lógico, no arriesgado.",
+      mobileBody: "Claridad, proceso y prueba reducen dudas rápido.",
       label: "Confianza activa",
       screen: "La decisión se siente segura.",
+      mobileScreen: "Decidir se siente seguro.",
       score: "0 fricción",
       path: "Prueba clara",
       signal: "CSP listo"
@@ -185,9 +300,12 @@
     action: {
       kicker: "Sistema de acción",
       title: "El contacto aparece cuando la persona ya tiene una razón para escribir.",
+      mobileTitle: "Contacto cuando ya hay interés.",
       body: "CTA, demos, planes y recepcionista virtual trabajan como un ecosistema para convertir curiosidad en conversación.",
+      mobileBody: "Botones, demos y chatbot empujan a la conversación.",
       label: "Conversión",
       screen: "Listo para solicitar diagnóstico.",
+      mobileScreen: "Listo para pedir diagnóstico.",
       score: "CTA vivo",
       path: "Lead directo",
       signal: "Chat local"
@@ -205,14 +323,14 @@
     });
 
     hero.dataset.ecosystemActive = button.dataset.ecosystemStep;
-    $("[data-eco-kicker]", hero).textContent = data.kicker;
-    $("[data-eco-title]", hero).textContent = data.title;
-    $("[data-eco-body]", hero).textContent = data.body;
-    $("[data-eco-screen-label]", hero).textContent = data.label;
-    $("[data-eco-screen-title]", hero).textContent = data.screen;
-    $("[data-eco-score]", hero).textContent = data.score;
-    $("[data-eco-path]", hero).textContent = data.path;
-    $("[data-eco-signal]", hero).textContent = data.signal;
+    $("[data-eco-kicker]", hero).textContent = copyForViewport(data, "kicker");
+    $("[data-eco-title]", hero).textContent = copyForViewport(data, "title");
+    $("[data-eco-body]", hero).textContent = copyForViewport(data, "body");
+    $("[data-eco-screen-label]", hero).textContent = copyForViewport(data, "label");
+    $("[data-eco-screen-title]", hero).textContent = copyForViewport(data, "screen");
+    $("[data-eco-score]", hero).textContent = copyForViewport(data, "score");
+    $("[data-eco-path]", hero).textContent = copyForViewport(data, "path");
+    $("[data-eco-signal]", hero).textContent = copyForViewport(data, "signal");
   };
 
   const ecosystemHero = $("[data-ecosystem-hero]");
@@ -220,13 +338,15 @@
     $$("[data-ecosystem-step]", ecosystemHero).forEach(button => {
       button.addEventListener("click", () => updateEcosystemHero(ecosystemHero, button));
     });
+    const activeEcosystemButton = $("[data-ecosystem-step].active", ecosystemHero) || $("[data-ecosystem-step]", ecosystemHero);
+    if (activeEcosystemButton) updateEcosystemHero(ecosystemHero, activeEcosystemButton);
+    onMobileContentChange(() => {
+      const activeButton = $("[data-ecosystem-step].active", ecosystemHero) || $("[data-ecosystem-step]", ecosystemHero);
+      if (activeButton) updateEcosystemHero(ecosystemHero, activeButton);
+    });
   }
 
-  $("[data-experience-lab]")?.addEventListener("click", (event) => {
-    const button = event.target.closest("[data-lab-option]");
-    const lab = event.currentTarget;
-    if (!button || !lab.contains(button)) return;
-
+  const updateExperienceLab = (lab, button) => {
     const data = labAnswers[button.dataset.labOption];
     if (!data) return;
 
@@ -236,13 +356,28 @@
       option.setAttribute("aria-pressed", String(isActive));
     });
 
-    $("[data-lab-eyebrow]", lab).textContent = data.eyebrow;
-    $("[data-lab-title]", lab).textContent = data.title;
-    $("[data-lab-body]", lab).textContent = data.body;
+    $("[data-lab-eyebrow]", lab).textContent = copyForViewport(data, "eyebrow");
+    $("[data-lab-title]", lab).textContent = copyForViewport(data, "title");
+    $("[data-lab-body]", lab).textContent = copyForViewport(data, "body");
     const link = $("[data-lab-link]", lab);
-    link.textContent = data.cta;
-    link.href = data.href;
-  });
+    link.textContent = copyForViewport(data, "cta");
+    link.href = copyForViewport(data, "href");
+  };
+
+  const experienceLab = $("[data-experience-lab]");
+  if (experienceLab) {
+    experienceLab.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-lab-option]");
+      if (!button || !experienceLab.contains(button)) return;
+      updateExperienceLab(experienceLab, button);
+    });
+    const activeLabButton = $("[data-lab-option].active", experienceLab) || $("[data-lab-option]", experienceLab);
+    if (activeLabButton) updateExperienceLab(experienceLab, activeLabButton);
+    onMobileContentChange(() => {
+      const activeButton = $("[data-lab-option].active", experienceLab) || $("[data-lab-option]", experienceLab);
+      if (activeButton) updateExperienceLab(experienceLab, activeButton);
+    });
+  }
 
   $("[data-portfolio-filter]")?.addEventListener("click", (event) => {
     const button = event.target.closest("[data-filter]");
@@ -271,27 +406,26 @@
       name: "Plan Básico",
       label: "Presencia elegante",
       body: "Te conviene empezar con una web clara, rápida y confiable: lo suficiente para que tu negocio deje de verse improvisado y pueda recibir contactos.",
+      mobileBody: "Web clara para verte profesional y recibir contactos.",
       href: "contacto.html"
     },
     sales: {
       name: "Plan Negocio",
       label: "Ruta de venta completa",
       body: "Es la mejor opción si quieres explicar servicios, resolver dudas, mostrar proceso y convertir visitas en conversaciones con más intención.",
+      mobileBody: "Para explicar servicios, resolver dudas y convertir visitas.",
       href: "contacto.html"
     },
     premium: {
       name: "Plan Premium",
       label: "Experiencia de alta percepción",
       body: "Ideal si tu marca compite por valor, lujo o diferenciación. La web necesita sentirse más editorial, más personalizada y más memorable.",
+      mobileBody: "Para marcas que necesitan verse high-end y memorables.",
       href: "contacto.html"
     }
   };
 
-  $("[data-plan-finder]")?.addEventListener("click", (event) => {
-    const button = event.target.closest("[data-plan-choice]");
-    const finder = event.currentTarget;
-    if (!button || !finder.contains(button)) return;
-
+  const updatePlanFinder = (finder, button) => {
     const data = planAnswers[button.dataset.planChoice];
     if (!data) return;
 
@@ -301,11 +435,26 @@
       option.setAttribute("aria-pressed", String(isActive));
     });
 
-    $("[data-plan-name]", finder).textContent = data.name;
-    $("[data-plan-label]", finder).textContent = data.label;
-    $("[data-plan-body]", finder).textContent = data.body;
-    $("[data-plan-link]", finder).href = data.href;
-  });
+    $("[data-plan-name]", finder).textContent = copyForViewport(data, "name");
+    $("[data-plan-label]", finder).textContent = copyForViewport(data, "label");
+    $("[data-plan-body]", finder).textContent = copyForViewport(data, "body");
+    $("[data-plan-link]", finder).href = copyForViewport(data, "href");
+  };
+
+  const planFinder = $("[data-plan-finder]");
+  if (planFinder) {
+    planFinder.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-plan-choice]");
+      if (!button || !planFinder.contains(button)) return;
+      updatePlanFinder(planFinder, button);
+    });
+    const activePlanButton = $("[data-plan-choice].active", planFinder) || $("[data-plan-choice]", planFinder);
+    if (activePlanButton) updatePlanFinder(planFinder, activePlanButton);
+    onMobileContentChange(() => {
+      const activeButton = $("[data-plan-choice].active", planFinder) || $("[data-plan-choice]", planFinder);
+      if (activeButton) updatePlanFinder(planFinder, activeButton);
+    });
+  }
 
   // Portfolio cards: open their demo pages
   $$(".project").forEach(card => {

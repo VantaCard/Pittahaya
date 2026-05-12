@@ -1533,6 +1533,261 @@ html.js main > .section:first-child .reveal{
   .brand-sub{ display:none; }
 }
 
+@media (max-width: 680px){
+  .container{ width:min(var(--container), calc(100% - 28px)); }
+  .header-inner{ min-height: 86px; }
+  .brand-logo{ width:50px; height:50px; }
+  .section{ padding: 50px 0; }
+  .section.compact{ padding: 38px 0; }
+  .section::before{ height: 190px; opacity:.12; }
+  .section-title{
+    font-size: clamp(29px, 10.5vw, 42px);
+    line-height: 1;
+    margin-bottom: 10px;
+    max-width: 100%;
+    overflow-wrap: break-word;
+    text-wrap: wrap;
+  }
+  .section-title::after{ margin-top: 11px; }
+  .section-lead{
+    max-width: 36ch;
+    margin-bottom: 18px;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .hero{ padding: 34px 0 28px; }
+  .hero-grid{ gap: 20px; }
+  .hero h1{
+    font-size: clamp(37px, 11vw, 48px);
+    line-height: .96;
+    margin: 12px 0 12px;
+    max-width: 100%;
+    overflow-wrap: break-word;
+    text-wrap: wrap;
+  }
+  .hero p{
+    max-width: 34ch;
+    margin-bottom: 18px;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .badge{
+    max-width:100%;
+    padding: 7px 10px;
+    font-size: 11px;
+    line-height: 1.25;
+  }
+  .hero-actions{ width:100%; gap: 9px; }
+  .hero-actions .btn,
+  .conversion-panel .btn{
+    max-width:100%;
+    min-width:0;
+  }
+  .hero-proof{ gap: 6px; margin-top: 12px; }
+  .proof-chip{
+    padding: 7px 9px;
+    font-size: 11px;
+  }
+  .hero-proof .proof-chip:nth-child(n+3){ display:none; }
+  .metrics{
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .metric{ padding: 10px; }
+  .card,
+  .card-inner,
+  .price,
+  .project,
+  .metric,
+  .trust-item,
+  .step,
+  .finder-result,
+  .lab-copy,
+  .lab-preview{
+    min-width:0;
+    max-width:100%;
+  }
+  .metric b{ font-size: 13px; }
+  .metric span{
+    font-size: 11px;
+    line-height: 1.35;
+  }
+  .metrics .metric:nth-child(n+3){ display:none; }
+  .ecosystem-stage{ padding: 12px; }
+  .ecosystem-map{ min-height: 210px; }
+  .ecosystem-node-grid{ gap: 7px; }
+  .ecosystem-node{
+    min-height: 40px;
+    padding: 8px;
+    font-size: 12px;
+  }
+  .ecosystem-node span{
+    width: 23px;
+    height: 23px;
+    font-size: 10px;
+  }
+  .ecosystem-screen{ margin-top: 12px; }
+  .screen-hero{ padding: 14px; min-height: 118px; }
+  .screen-hero strong{
+    max-width: 11ch;
+    font-size: clamp(27px, 9vw, 38px);
+  }
+  .screen-cta{ padding: 8px 12px; font-size: 11px; }
+  .ecosystem-content{ padding: 14px; }
+  .ecosystem-copy strong{
+    font-size: 17px;
+    line-height: 1.2;
+  }
+  .ecosystem-copy p,
+  .finder-result p,
+  .lab-preview p,
+  .price .plan-note,
+  .step p,
+  .contact-option span,
+  .card p:not(.form-status):not(.footer-legal){
+    font-size: 13px;
+    line-height: 1.45;
+    display:block;
+    max-height: 2.9em;
+    overflow: hidden;
+    overflow-wrap: break-word;
+  }
+  .ecosystem-stats{
+    grid-template-columns: 1fr;
+    margin-top: 12px;
+  }
+  .ecosystem-stats div:nth-child(n+2){ display:none; }
+  .trust-band{ grid-template-columns: 1fr 1fr; }
+  .trust-item{ padding: 13px; }
+  .trust-item b{
+    font-size: 17px;
+    margin-bottom: 5px;
+  }
+  .trust-item span{
+    font-size: 12px;
+    line-height: 1.35;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .experience-lab,
+  .plan-finder{
+    gap: 10px;
+    padding: 10px;
+  }
+  .lab-copy,
+  .lab-preview,
+  .finder-result{
+    padding: 14px;
+  }
+  .lab-copy .section-lead{ margin-bottom: 12px; }
+  .lab-controls{ gap: 8px; }
+  .lab-option{
+    grid-template-columns: auto 1fr;
+    padding: 11px;
+  }
+  .lab-option span{
+    width: 30px;
+    height: 30px;
+    border-radius: 10px;
+  }
+  .lab-option small{ display:none; }
+  .lab-preview{ min-height: 142px; }
+  .lab-preview strong{
+    max-width: 14ch;
+    font-size: clamp(30px, 10vw, 44px);
+  }
+  .pricing{ gap: 10px; }
+  .price{ gap: 10px; }
+  .price .tag{
+    max-width:100%;
+    width:fit-content;
+    white-space:normal;
+    line-height:1.25;
+  }
+  .price ul{
+    font-size: 13px;
+    line-height: 1.55;
+  }
+  .price ul li:nth-child(n+3){ display:none; }
+  .card-inner{ padding: 16px; }
+  .split{ gap: 10px; }
+  .steps{ gap: 10px; }
+  .step{ padding: 14px; }
+  .step h4{ margin: 7px 0 5px; }
+  .gallery{ gap: 10px; }
+  .portfolio-toolbar{
+    gap: 6px;
+    padding: 6px;
+  }
+  .portfolio-toolbar button{
+    padding: 9px 10px;
+    font-size: 12px;
+  }
+  .portfolio-gallery .project.featured img,
+  .portfolio-gallery .project img,
+  .project img{
+    height: 230px;
+  }
+  .portfolio-gallery .project{ min-height: 230px; }
+  .portfolio-gallery .project .meta h4{ font-size: 16px; }
+  .portfolio-gallery .project .meta span:not(.pill){
+    max-width: 24ch;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .portfolio-note{ display:none; }
+  .conversion-panel{
+    padding: 16px;
+    gap: 14px;
+  }
+  .conversion-panel h2{ font-size: clamp(29px, 9vw, 40px); }
+  .conversion-panel p{
+    font-size: 13px;
+    line-height: 1.45;
+  }
+  .contact-options{ gap: 8px; }
+  textarea{ min-height: 98px; }
+  .form{ gap: 10px; }
+  .field input,
+  .field select,
+  .field textarea{
+    min-height: 50px;
+    font-size: 15px;
+  }
+  .footer{
+    padding: 20px 0 calc(66px + env(safe-area-inset-bottom));
+  }
+  .footer-grid{
+    gap: 14px;
+    align-items:start;
+  }
+  .footer .brand-logo{ width:42px; height:42px; }
+  .footer-legal{
+    max-width: 34ch;
+    font-size: 9.5px;
+    line-height: 1.35;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .footer-links{
+    display:grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width:100%;
+    gap: 7px;
+  }
+  .footer-links a{
+    min-height: 34px;
+    padding: 7px 9px;
+    font-size: 12px;
+  }
+}
+
 
 /* Logo */
 .brand-logo{
