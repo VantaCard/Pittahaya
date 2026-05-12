@@ -1432,6 +1432,11 @@ html.js main > .section:first-child .reveal{
 
 /* Responsive */
 @media (max-width: 980px){
+  #servicios,
+  #planes,
+  #portafolio{
+    display:none;
+  }
   .hero-grid{ grid-template-columns: 1fr; }
   .grid-3{ grid-template-columns: 1fr; }
   .grid-2{ grid-template-columns: 1fr; }
