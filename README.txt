@@ -36,7 +36,7 @@ Cada demo es **standalone** (con su propio CSS y tipografía), para que el clien
 - `api/crm-config.js` entrega al navegador solo la URL publica y anon key de Supabase para iniciar sesion.
 - `crm/login.html`, `crm/index.html` y `crm/lead.html` forman el panel CRM.
 - `api/contact.mjs` queda como handler anterior de email por si se necesita fallback.
-- Antes de probar en produccion, ejecuta el archivo `sql/schema.sql` del CRM limpio en Supabase SQL Editor para crear `leads`, `lead_notes`, `lead_tasks` y `rate_limits`.
+- Antes de probar en produccion, ejecuta en Supabase SQL Editor el schema SQL del paquete CRM limpio para crear `leads`, `lead_notes` y `lead_tasks`.
 - En Vercel agrega estas Environment Variables:
   - `RESEND_API_KEY`: API key privada de Resend.
   - `LEAD_TO_EMAIL`: `jfmcorp@jfmcorporation.com`.
