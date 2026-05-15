@@ -3,9 +3,11 @@
    ========================= */
 
 .pitahaya-chat{
+  --pitahaya-chat-vh:100vh;
+  --pitahaya-chat-bottom:max(18px, env(safe-area-inset-bottom));
   position:fixed;
   right:max(18px, env(safe-area-inset-right));
-  bottom:max(18px, env(safe-area-inset-bottom));
+  bottom:var(--pitahaya-chat-bottom);
   z-index:9999;
   font-family:"Manrope","Space Grotesk","Plus Jakarta Sans",system-ui,-apple-system,Segoe UI,sans-serif;
   color:#fff8ec;
@@ -14,29 +16,32 @@
 .pitahaya-chat *{box-sizing:border-box}
 
 .demo-footer{
-  padding-bottom:clamp(132px, 13vw, 174px) !important;
+  padding-top:22px !important;
+  padding-bottom:calc(38px + env(safe-area-inset-bottom)) !important;
 }
 
 .demo-footer .wrap{
   display:grid !important;
-  grid-template-columns:minmax(0, 1fr) auto;
-  gap:16px;
+  grid-template-columns:minmax(280px, 460px) minmax(0, auto);
+  gap:24px;
   align-items:center;
 }
 
 .demo-footer-brand{
-  display:inline-grid;
-  grid-template-columns:auto auto;
-  grid-template-rows:auto auto;
+  display:grid;
+  grid-template-columns:44px minmax(0, 1fr);
+  grid-template-rows:auto auto auto;
   align-items:center;
-  gap:2px 10px;
+  justify-self:start;
+  gap:1px 10px;
+  width:min(100%, 460px);
   color:inherit;
 }
 
 .demo-footer-brand img{
-  grid-row:1 / 3;
-  width:46px;
-  height:46px;
+  grid-row:1 / 4;
+  width:44px;
+  height:44px;
   object-fit:contain;
   filter:drop-shadow(0 12px 28px rgba(232,52,135,.22));
 }
@@ -52,30 +57,32 @@
 .demo-footer-brand strong{
   color:currentColor;
   opacity:.94;
-  font-size:15px;
-  letter-spacing:.09em;
+  font-size:16px;
+  letter-spacing:.11em;
   text-transform:uppercase;
 }
 
 .demo-footer-legal{
   grid-column:2;
-  max-width:46ch;
+  max-width:40ch;
   color:currentColor;
   opacity:.54;
-  font-size:10px;
-  line-height:1.45;
+  font-size:9.5px;
+  line-height:1.38;
   letter-spacing:.02em;
+  margin-top:3px;
 }
 
 .demo-footer .navLinks,
 .demo-footer .navlinks{
   align-items:center;
+  justify-content:flex-end;
 }
 
 @media (min-width:621px){
   .demo-footer .navLinks,
   .demo-footer .navlinks{
-    padding-right:clamp(230px, 20vw, 320px);
+    padding-right:clamp(92px, 9vw, 136px);
   }
 }
 
@@ -347,6 +354,7 @@ html.js .hero [data-reveal]{
   border:1px solid rgba(255,255,255,.12);
   background:rgba(255,255,255,.06);
   color:#fff8ec;
+  font-size:16px;
   padding:0 13px;
   outline:none;
 }
@@ -365,6 +373,7 @@ html.js .hero [data-reveal]{
   border-radius:15px;
   color:#09100e;
   background:linear-gradient(135deg,#e6bf74,#e83487);
+  font-size:16px;
   font-weight:900;
   cursor:pointer;
 }
@@ -387,11 +396,13 @@ html.js .hero [data-reveal]{
 
 @media (max-width:620px){
   .demo-footer{
-    padding-bottom:calc(138px + env(safe-area-inset-bottom)) !important;
+    padding-top:20px !important;
+    padding-bottom:calc(96px + env(safe-area-inset-bottom)) !important;
   }
 
   .demo-footer .wrap{
     grid-template-columns:1fr;
+    gap:18px;
   }
 
   .demo-footer .navLinks,
@@ -408,8 +419,9 @@ html.js .hero [data-reveal]{
   }
 
   .pitahaya-chat{
+    --pitahaya-chat-bottom:max(14px, env(safe-area-inset-bottom));
     right:12px;
-    bottom:max(14px, env(safe-area-inset-bottom));
+    bottom:var(--pitahaya-chat-bottom);
     left:auto;
   }
 
@@ -424,15 +436,58 @@ html.js .hero [data-reveal]{
 
   .pitahaya-chat.is-open{
     left:12px;
-    bottom:max(12px, env(safe-area-inset-bottom));
+    bottom:var(--pitahaya-chat-bottom);
   }
 
   .pitahaya-chat__panel{
     width:100%;
-    max-height:calc(100vh - 24px);
+    max-height:calc(var(--pitahaya-chat-vh, 100vh) - 24px);
   }
 
   .pitahaya-chat__messages{
-    height:min(360px, calc(100vh - 280px));
+    height:min(360px, calc(var(--pitahaya-chat-vh, 100vh) - 280px));
+  }
+
+  .pitahaya-chat.is-keyboard{
+    left:10px;
+    right:10px;
+  }
+
+  .pitahaya-chat.is-keyboard .pitahaya-chat__panel{
+    max-height:calc(var(--pitahaya-chat-vh, 100vh) - 18px);
+    border-radius:22px;
+  }
+
+  .pitahaya-chat.is-keyboard .pitahaya-chat__header{
+    padding:10px 12px;
+  }
+
+  .pitahaya-chat.is-keyboard .pitahaya-chat__avatar{
+    width:38px;
+    height:38px;
+  }
+
+  .pitahaya-chat.is-keyboard .pitahaya-chat__status,
+  .pitahaya-chat.is-keyboard .pitahaya-chat__privacy{
+    display:none;
+  }
+
+  .pitahaya-chat.is-keyboard .pitahaya-chat__messages{
+    height:clamp(132px, calc(var(--pitahaya-chat-vh, 100vh) - 246px), 300px);
+    padding:12px;
+  }
+
+  .pitahaya-chat.is-keyboard .pitahaya-chat__quick{
+    padding:0 12px 8px;
+  }
+
+  .pitahaya-chat.is-keyboard .pitahaya-chat__composer{
+    gap:8px;
+    padding:10px;
+  }
+
+  .pitahaya-chat.is-keyboard .pitahaya-chat__input,
+  .pitahaya-chat.is-keyboard .pitahaya-chat__send{
+    min-height:48px;
   }
 }

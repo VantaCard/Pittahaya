@@ -98,10 +98,46 @@
   root.append(launcher, panel);
   document.body.append(root);
 
+  const isMobileLayout = () => window.matchMedia("(max-width: 620px)").matches;
+
+  const updateViewportMetrics = () => {
+    const viewport = window.visualViewport;
+    const viewportHeight = Math.round(viewport?.height || window.innerHeight || document.documentElement.clientHeight);
+    const keyboardOffset = viewport
+      ? Math.max(0, Math.round(window.innerHeight - viewport.height - viewport.offsetTop))
+      : 0;
+    const keyboardOpen = isMobileLayout() && document.activeElement === input && keyboardOffset > 90;
+    const baseBottom = isMobileLayout()
+      ? "max(14px, env(safe-area-inset-bottom))"
+      : "max(18px, env(safe-area-inset-bottom))";
+
+    root.style.setProperty("--pitahaya-chat-vh", `${viewportHeight}px`);
+    root.style.setProperty("--pitahaya-chat-bottom", baseBottom);
+    root.classList.toggle("is-keyboard", keyboardOpen);
+
+    if (keyboardOpen) {
+      window.requestAnimationFrame(() => {
+        const viewportBottom = viewport ? viewport.height + viewport.offsetTop : window.innerHeight;
+        const panelBottom = panel.getBoundingClientRect().bottom;
+        const overflow = Math.max(0, Math.ceil(panelBottom - viewportBottom + 10));
+        if (overflow) root.style.setProperty("--pitahaya-chat-bottom", `${overflow + 14}px`);
+        window.setTimeout(scrollMessages, 60);
+      });
+    }
+  };
+
   const setOpen = (isOpen) => {
     root.classList.toggle("is-open", isOpen);
     launcher.setAttribute("aria-expanded", String(isOpen));
-    if (isOpen) input.focus();
+    updateViewportMetrics();
+
+    if (!isOpen) {
+      root.classList.remove("is-keyboard");
+      return;
+    }
+
+    scrollMessages();
+    if (!isMobileLayout()) input.focus();
   };
 
   const scrollMessages = () => {
@@ -355,6 +391,17 @@
 
   launcher.addEventListener("click", () => setOpen(true));
   close.addEventListener("click", () => setOpen(false));
+  input.addEventListener("focus", () => {
+    updateViewportMetrics();
+    window.setTimeout(updateViewportMetrics, 220);
+    window.setTimeout(scrollMessages, 260);
+  });
+  input.addEventListener("blur", () => {
+    window.setTimeout(updateViewportMetrics, 120);
+  });
+  window.addEventListener("resize", updateViewportMetrics);
+  window.visualViewport?.addEventListener("resize", updateViewportMetrics);
+  window.visualViewport?.addEventListener("scroll", updateViewportMetrics);
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape" && root.classList.contains("is-open")) setOpen(false);
   });
