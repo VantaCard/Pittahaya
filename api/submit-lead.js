@@ -196,14 +196,14 @@ const sendAdminNotification = async (lead, leadId) => {
   if (!process.env.RESEND_API_KEY) return;
 
   const toEmail = process.env.LEAD_TO_EMAIL || "jfmcorp@jfmcorporation.com";
-  const fromEmail = process.env.LEAD_FROM_EMAIL || "Pitahaya <noreply@jfmcorporation.com>";
+  const fromEmail = process.env.LEAD_FROM_EMAIL || "Pittahaya <noreply@jfmcorporation.com>";
   const crmUrl = `${process.env.NEXT_PUBLIC_SITE_URL || "https://pitahaya.vercel.app"}/crm/lead.html?id=${encodeURIComponent(leadId || "")}`;
   const priorityLabel = { hot: "Hot", warm: "Warm", cold: "Cold" }[lead.priority] || "Cold";
 
   const safe = Object.fromEntries(Object.entries(lead).map(([key, value]) => [key, escapeHtml(value)]));
   const html = `
     <div style="font-family:Arial,sans-serif;line-height:1.6;color:#151515">
-      <h2 style="margin:0 0 12px;color:#e83487">Nuevo lead guardado en Pitahaya CRM</h2>
+      <h2 style="margin:0 0 12px;color:#e83487">Nuevo lead guardado en Pittahaya CRM</h2>
       <p><strong>Nombre:</strong> ${safe.name}</p>
       <p><strong>Correo:</strong> <a href="mailto:${safe.email}">${safe.email}</a></p>
       <p><strong>Negocio o marca:</strong> ${safe.company || "—"}</p>
@@ -216,7 +216,7 @@ const sendAdminNotification = async (lead, leadId) => {
   `;
 
   const text = [
-    "Nuevo lead guardado en Pitahaya CRM",
+    "Nuevo lead guardado en Pittahaya CRM",
     "",
     `Nombre: ${lead.name}`,
     `Correo: ${lead.email}`,
@@ -235,7 +235,7 @@ const sendAdminNotification = async (lead, leadId) => {
       Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
       "Content-Type": "application/json",
       "Idempotency-Key": randomUUID(),
-      "User-Agent": "pitahaya-crm-lead-form/1.0"
+      "User-Agent": "pittahaya-crm-lead-form/1.0"
     },
     body: JSON.stringify({
       from: fromEmail,

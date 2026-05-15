@@ -33,29 +33,29 @@
 
   const root = make("section", "pitahaya-chat");
   root.setAttribute("data-pitahaya-chat", "");
-  root.setAttribute("aria-label", "Recepcionista virtual Pitahaya");
+  root.setAttribute("aria-label", "Recepcionista virtual Pittahaya");
 
   const launcher = make("button", "pitahaya-chat__launcher");
   launcher.type = "button";
-  launcher.setAttribute("aria-label", "Abrir recepcionista Pitahaya");
-  launcher.title = "Habla con Pitahaya";
+  launcher.setAttribute("aria-label", "Abrir recepcionista Pittahaya");
+  launcher.title = "Habla con Pittahaya";
   launcher.setAttribute("aria-expanded", "false");
   const launcherSpark = make("span", "pitahaya-chat__spark");
   launcherSpark.setAttribute("aria-hidden", "true");
-  const launcherText = make("span", "", "Habla con Pitahaya");
+  const launcherText = make("span", "", "Habla con Pittahaya");
   launcher.append(launcherSpark, launcherText);
 
   const panel = make("div", "pitahaya-chat__panel");
   panel.setAttribute("role", "dialog");
-  panel.setAttribute("aria-label", "Recepción virtual de Pitahaya");
+  panel.setAttribute("aria-label", "Recepción virtual de Pittahaya");
 
   const header = make("div", "pitahaya-chat__header");
   const identity = make("div", "pitahaya-chat__identity");
   const avatar = make("img", "pitahaya-chat__avatar");
   avatar.src = "assets/pitahaya-logo.png";
-  avatar.alt = "Pitahaya";
+  avatar.alt = "Pittahaya";
   const identityText = make("div", "");
-  const title = make("span", "pitahaya-chat__title", "Recepcionista Pitahaya");
+  const title = make("span", "pitahaya-chat__title", "Recepcionista Pittahaya");
   const status = make("span", "pitahaya-chat__status", "Recepción virtual para tu proyecto");
   const close = make("button", "pitahaya-chat__close", "×");
   close.type = "button";
@@ -167,7 +167,7 @@
   const answerBank = [
     {
       keywords: ["hola", "buenas", "hello", "hey", "atiendan", "atencion", "atender", "recepcion", "asesor", "ayuda"],
-      text: "Hola, bienvenido a Pitahaya. Soy la recepcionista virtual: puedo orientarte sobre precios, demos, tiempos, servicios, seguridad, SEO o el siguiente paso para cotizar.",
+      text: "Hola, bienvenido a Pittahaya. Soy la recepcionista virtual: puedo orientarte sobre precios, demos, tiempos, servicios, seguridad, SEO o el siguiente paso para cotizar.",
       actions: actionSets.start
     },
     {
@@ -283,7 +283,7 @@
     },
     {
       keywords: ["ecuador", "quito", "guayaquil", "cuenca", "espanol", "ingles", "idioma", "internacional"],
-      text: "Pitahaya tiene raíz ecuatoriana y puede orientar una web para mercado local o internacional. Si necesitas versión en inglés o enfoque por ciudad/país, conviene indicarlo al cotizar.",
+      text: "Pittahaya tiene raíz ecuatoriana y puede orientar una web para mercado local o internacional. Si necesitas versión en inglés o enfoque por ciudad/país, conviene indicarlo al cotizar.",
       actions: actionSets.contact
     },
     {
@@ -306,7 +306,7 @@
 
     if (!text) {
       return {
-        text: "Bienvenido a Pitahaya. Cuéntame qué tipo de proyecto tienes y te ayudo a ubicar la mejor opción: demo, planes o contacto directo.",
+        text: "Bienvenido a Pittahaya. Cuéntame qué tipo de proyecto tienes y te ayudo a ubicar la mejor opción: demo, planes o contacto directo.",
         actions: [
           { label: "Ver demos", href: routes.portafolio },
           { label: "Ver planes", href: routes.planes },
@@ -366,7 +366,7 @@
 
   addMessage(
     "bot",
-    "Bienvenido a Pitahaya. Soy la recepcionista virtual: puedo orientarte, mostrarte demos, explicar planes y llevarte al contacto correcto.",
+    "Bienvenido a Pittahaya. Soy la recepcionista virtual: puedo orientarte, mostrarte demos, explicar planes y llevarte al contacto correcto.",
     [
       { label: "Qué demo necesito", prompt: "Qué demo necesito" },
       { label: "Ver planes", href: routes.planes },

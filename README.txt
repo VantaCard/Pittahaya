@@ -1,4 +1,4 @@
-# Pitahaya (Multipágina)
+# Pittahaya (Multipágina)
 
 ## Páginas principales
 - index.html
@@ -26,7 +26,7 @@ Cada demo es **standalone** (con su propio CSS y tipografía), para que el clien
 - `SECURITY.md` documenta la configuración y los cuidados antes de publicar.
 
 ## Chatbot
-- `assets/chatbot.css` y `assets/chatbot.js` añaden la recepcionista virtual de Pitahaya en todas las páginas.
+- `assets/chatbot.css` y `assets/chatbot.js` añaden la recepcionista virtual de Pittahaya en todas las páginas.
 - El chatbot funciona localmente, recomienda demos/planes y no depende de scripts externos.
 
 ## Solicitudes automaticas y CRM
@@ -40,7 +40,7 @@ Cada demo es **standalone** (con su propio CSS y tipografía), para que el clien
 - En Vercel agrega estas Environment Variables:
   - `RESEND_API_KEY`: API key privada de Resend.
   - `LEAD_TO_EMAIL`: `jfmcorp@jfmcorporation.com`.
-  - `LEAD_FROM_EMAIL`: email verificado para enviar, por ejemplo `Pitahaya <noreply@jfmcorporation.com>`.
+  - `LEAD_FROM_EMAIL`: email verificado para enviar, por ejemplo `Pittahaya <noreply@jfmcorporation.com>`.
   - `SUPABASE_URL`: URL del proyecto Supabase del CRM.
   - `NEXT_PUBLIC_SUPABASE_URL`: la misma URL de Supabase, usada por el login del CRM.
   - `SUPABASE_ANON_KEY`: anon/public key de Supabase para login.

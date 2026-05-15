@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pitahaya CRM · Dashboard</title>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<title>Pittahaya CRM · Dashboard</title>
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap');
@@ -461,7 +462,7 @@
 <!-- ── Sidebar ── -->
 <nav class="sidebar">
   <div class="sidebar-brand">
-    <div class="sidebar-logo">Pitahaya</div>
+    <div class="sidebar-logo">Pittahaya</div>
     <div class="sidebar-crm-label">CRM · Panel Admin</div>
   </div>
   <div class="sidebar-nav">
@@ -771,7 +772,7 @@ async function exportCSV() {
   const blob = await res.blob();
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = `pitahaya-leads-${new Date().toISOString().slice(0,10)}.csv`;
+  a.download = `pittahaya-leads-${new Date().toISOString().slice(0,10)}.csv`;
   a.click();
 }
 

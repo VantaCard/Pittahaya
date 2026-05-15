@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pitahaya CRM · Lead</title>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<title>Pittahaya CRM · Lead</title>
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap');
@@ -176,7 +177,7 @@
 <!-- Sidebar -->
 <nav class="sidebar">
   <div class="sidebar-brand">
-    <div class="sidebar-logo">Pitahaya</div>
+    <div class="sidebar-logo">Pittahaya</div>
     <div class="sidebar-crm-label">CRM · Panel Admin</div>
   </div>
   <div class="sidebar-nav">
@@ -377,10 +378,10 @@ function renderPage(lead, notes, tasks) {
         <div class="card">
           <div class="card-title">Acciones rápidas</div>
           <div style="display:flex; flex-direction:column; gap:10px;">
-            <a href="mailto:${esc(lead.email)}?subject=Propuesta Pitahaya para ${esc(lead.company || lead.name)}" class="btn" style="justify-content:center; width:100%;">
+            <a href="mailto:${esc(lead.email)}?subject=Propuesta Pittahaya para ${esc(lead.company || lead.name)}" class="btn" style="justify-content:center; width:100%;">
               Enviar propuesta por email
             </a>
-            <a href="https://wa.me/${lead.phone?.replace(/\D/g,'')}?text=Hola ${encodeURIComponent(lead.name.split(' ')[0])}, te contacto de Pitahaya..." class="btn" target="_blank" style="justify-content:center; width:100%; ${!lead.phone?'opacity:0.4;pointer-events:none':''}">
+            <a href="https://wa.me/${lead.phone?.replace(/\D/g,'')}?text=Hola ${encodeURIComponent(lead.name.split(' ')[0])}, te contacto de Pittahaya..." class="btn" target="_blank" style="justify-content:center; width:100%; ${!lead.phone?'opacity:0.4;pointer-events:none':''}">
               WhatsApp
             </a>
           </div>

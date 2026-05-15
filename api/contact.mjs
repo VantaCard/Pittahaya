@@ -1,6 +1,6 @@
 const RESEND_ENDPOINT = "https://api.resend.com/emails";
 const TO_EMAIL = process.env.LEAD_TO_EMAIL || "jfmcorp@jfmcorporation.com";
-const FROM_EMAIL = process.env.LEAD_FROM_EMAIL || "Pitahaya <onboarding@resend.dev>";
+const FROM_EMAIL = process.env.LEAD_FROM_EMAIL || "Pittahaya <onboarding@resend.dev>";
 const MAX_BODY_BYTES = 8000;
 const MAX_TEXT_LENGTH = 1600;
 const WINDOW_MS = 60 * 1000;
@@ -94,7 +94,7 @@ const buildEmail = ({ nombre, email, negocio, plan, mensaje }) => {
   };
 
   const text = [
-    "Nueva solicitud desde Pitahaya",
+    "Nueva solicitud desde Pittahaya",
     "",
     `Nombre: ${nombre}`,
     `Correo: ${email}`,
@@ -107,7 +107,7 @@ const buildEmail = ({ nombre, email, negocio, plan, mensaje }) => {
 
   const html = `
     <div style="font-family:Arial,sans-serif;line-height:1.6;color:#151515">
-      <h2 style="margin:0 0 12px;color:#e83487">Nueva solicitud desde Pitahaya</h2>
+      <h2 style="margin:0 0 12px;color:#e83487">Nueva solicitud desde Pittahaya</h2>
       <p><strong>Nombre:</strong> ${safe.nombre}</p>
       <p><strong>Correo:</strong> ${safe.email}</p>
       <p><strong>Negocio o marca:</strong> ${safe.negocio}</p>
@@ -175,7 +175,7 @@ export default {
         Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
         "Content-Type": "application/json",
         "Idempotency-Key": crypto.randomUUID(),
-        "User-Agent": "pitahaya-contact-form/1.0"
+        "User-Agent": "pittahaya-contact-form/1.0"
       },
       body: JSON.stringify({
         from: FROM_EMAIL,

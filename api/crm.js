@@ -1,6 +1,6 @@
 // api/crm.js
 // ============================================================
-// Pitahaya CRM — Admin Data API
+// Pittahaya CRM — Admin Data API
 // All routes require a valid Supabase session token.
 // Place this file at: /api/crm.js in your Vercel project.
 // ============================================================
@@ -240,7 +240,7 @@ async function exportCSV(req, res) {
   ].join('\n');
 
   res.setHeader('Content-Type', 'text/csv; charset=utf-8');
-  res.setHeader('Content-Disposition', `attachment; filename="pitahaya-leads-${new Date().toISOString().slice(0,10)}.csv"`);
+  res.setHeader('Content-Disposition', `attachment; filename="pittahaya-leads-${new Date().toISOString().slice(0,10)}.csv"`);
   return res.status(200).send('\uFEFF' + csv); // BOM for Excel UTF-8
 }
 
