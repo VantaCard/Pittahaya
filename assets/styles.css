@@ -1405,9 +1405,9 @@ button[disabled]{
 /* Reveal animations */
 .reveal{ opacity: 1; transform: none; }
 html.js .reveal{
-  opacity: 1;
-  transform: none;
-  transition: opacity .7s ease, transform .7s ease;
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity .72s ease, transform .72s ease;
 }
 html.js .reveal.in{ opacity: 1; transform: translateY(0); }
 html.js .hero .reveal,
@@ -1828,4 +1828,347 @@ html.js main > .section:first-child .reveal{
   .step{
     transform:none !important;
   }
+}
+
+/* ========================
+   HERO BADGES ROW
+   ======================== */
+.hero-badges{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:10px;
+  margin-bottom:4px;
+}
+
+/* Availability signal */
+.availability-signal{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:7px 12px;
+  border-radius:999px;
+  font-size:12px;
+  color:rgba(138,203,99,.95);
+  border:1px solid rgba(138,203,99,.22);
+  background:rgba(138,203,99,.06);
+}
+.avail-dot{
+  width:7px;
+  height:7px;
+  border-radius:999px;
+  background:var(--leaf);
+  box-shadow:0 0 12px rgba(138,203,99,.55);
+  animation:pulse-avail 2s ease-in-out infinite;
+}
+@keyframes pulse-avail{
+  0%,100%{ opacity:1; transform:scale(1); }
+  50%{ opacity:.58; transform:scale(.82); }
+}
+@media (max-width:680px){
+  .availability-signal{ display:none; }
+}
+
+/* ========================
+   STATS BAND
+   ======================== */
+.stats-band{
+  display:grid;
+  grid-template-columns:repeat(4, 1fr);
+  gap:14px;
+  margin-top:28px;
+}
+.stat-item{
+  text-align:center;
+  padding:20px 14px;
+  border-radius:var(--radius2);
+  border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.025);
+  transform:perspective(900px) rotateX(var(--tilt-y, 0deg)) rotateY(var(--tilt-x, 0deg));
+  transition:transform .22s ease, border-color .22s ease, background .22s ease;
+}
+.stat-item.is-tilting{
+  border-color:rgba(230,191,116,.20);
+  background:rgba(255,255,255,.04);
+}
+.stat-item b{
+  display:block;
+  font-family:"Cormorant Garamond", ui-serif, Georgia, serif;
+  font-size:clamp(30px, 3.2vw, 46px);
+  color:rgba(255,240,201,.98);
+  line-height:1;
+}
+.stat-item span{
+  display:block;
+  margin-top:7px;
+  font-size:12px;
+  color:rgba(183,181,173,.88);
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  line-height:1.35;
+}
+@media (max-width:680px){
+  .stats-band{ grid-template-columns:1fr 1fr; gap:10px; }
+}
+
+/* ========================
+   TESTIMONIALS
+   ======================== */
+.testimonials{
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:14px;
+  margin-top:24px;
+}
+.testimonial{
+  padding:22px;
+  border-radius:var(--radius2);
+  border:1px solid rgba(230,191,116,.14);
+  background:
+    linear-gradient(145deg, rgba(230,191,116,.06), rgba(232,52,135,.03)),
+    rgba(15,18,26,.55);
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  transform:perspective(900px) rotateX(var(--tilt-y, 0deg)) rotateY(var(--tilt-x, 0deg));
+  transition:transform .22s ease, border-color .22s ease;
+}
+.testimonial.is-tilting{
+  border-color:rgba(230,191,116,.26);
+}
+.testimonial-stars{
+  color:var(--gold);
+  font-size:14px;
+  letter-spacing:3px;
+}
+.testimonial p{
+  margin:0;
+  color:rgba(242,240,234,.90);
+  font-size:14px;
+  line-height:1.72;
+  flex:1;
+  font-style:italic;
+}
+.testimonial-author{
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+  padding-top:12px;
+  border-top:1px solid rgba(255,255,255,.08);
+}
+.testimonial-author strong{
+  font-size:13px;
+  font-style:normal;
+  color:rgba(242,240,234,.96);
+}
+.testimonial-author span{
+  font-size:12px;
+  color:rgba(183,181,173,.82);
+}
+@media (max-width:980px){
+  .testimonials{ grid-template-columns:1fr; }
+}
+@media (max-width:680px){
+  .testimonials{ gap:10px; }
+  .testimonial{ padding:16px; }
+}
+
+/* ========================
+   FAQ ACCORDION
+   ======================== */
+.faq{
+  display:grid;
+  gap:10px;
+  margin-top:24px;
+}
+.faq-item{
+  border-radius:var(--radius2);
+  border:1px solid rgba(255,255,255,.09);
+  background:rgba(255,255,255,.025);
+  overflow:hidden;
+  transition:border-color .18s ease, background .18s ease;
+}
+.faq-item.is-open{
+  border-color:rgba(230,191,116,.22);
+  background:
+    linear-gradient(145deg, rgba(230,191,116,.07), rgba(232,52,135,.035)),
+    rgba(15,18,26,.55);
+}
+.faq-question{
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  padding:18px 20px;
+  background:transparent;
+  border:none;
+  color:rgba(242,240,234,.96);
+  font:inherit;
+  font-size:15px;
+  font-weight:600;
+  text-align:left;
+  cursor:pointer;
+  transition:color .18s ease;
+}
+.faq-question:hover{ color:rgba(255,240,201,.98); }
+.faq-chevron{
+  width:24px;
+  height:24px;
+  flex-shrink:0;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(255,255,255,.04);
+  display:grid;
+  place-items:center;
+  font-size:16px;
+  font-weight:300;
+  line-height:1;
+  transition:transform .22s ease, background .18s ease, border-color .18s ease;
+  color:rgba(242,240,234,.70);
+}
+.faq-item.is-open .faq-chevron{
+  transform:rotate(45deg);
+  background:rgba(230,191,116,.14);
+  border-color:rgba(230,191,116,.30);
+  color:rgba(255,240,201,.95);
+}
+.faq-answer{
+  overflow:hidden;
+  max-height:0;
+  transition:max-height .32s ease, padding .22s ease;
+  padding:0 20px;
+  color:rgba(183,181,173,.92);
+  font-size:14px;
+  line-height:1.72;
+}
+.faq-item.is-open .faq-answer{
+  max-height:300px;
+  padding-bottom:20px;
+}
+@media (max-width:680px){
+  .faq-question{ padding:14px 16px; font-size:14px; }
+  .faq-answer{ padding:0 16px; }
+  .faq-item.is-open .faq-answer{ padding-bottom:16px; }
+}
+
+/* ========================
+   WHATSAPP FLOAT BUTTON
+   ======================== */
+.whatsapp-float{
+  position:fixed;
+  bottom:calc(24px + env(safe-area-inset-bottom));
+  left:22px;
+  z-index:47;
+  display:flex;
+  align-items:center;
+  gap:9px;
+  padding:12px 16px;
+  border-radius:999px;
+  background:#25d366;
+  color:#fff;
+  font-weight:700;
+  font-size:13px;
+  text-decoration:none;
+  box-shadow:0 14px 40px rgba(37,211,102,.38), 0 0 0 6px rgba(37,211,102,.08);
+  transition:transform .18s ease, box-shadow .18s ease;
+  border:0;
+  cursor:pointer;
+}
+.whatsapp-float:hover{
+  transform:translateY(-2px);
+  box-shadow:0 20px 56px rgba(37,211,102,.48), 0 0 0 8px rgba(37,211,102,.10);
+  color:#fff;
+}
+.whatsapp-float svg{ flex-shrink:0; }
+.whatsapp-float__label{
+  max-width:0;
+  overflow:hidden;
+  white-space:nowrap;
+  opacity:0;
+  transition:max-width .22s ease, opacity .18s ease;
+}
+.whatsapp-float:hover .whatsapp-float__label{
+  max-width:160px;
+  opacity:1;
+}
+@media (max-width:680px){
+  .whatsapp-float{ display:none; }
+}
+
+/* ========================
+   MOBILE STICKY CTA BAR
+   ======================== */
+.mobile-cta-bar{
+  display:none;
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  z-index:46;
+  padding:10px 14px calc(10px + env(safe-area-inset-bottom));
+  background:rgba(7,6,9,.94);
+  backdrop-filter:blur(16px);
+  border-top:1px solid rgba(230,191,116,.14);
+  gap:10px;
+}
+.mobile-cta-bar .wa-btn{
+  flex:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  min-height:46px;
+  padding:11px 14px;
+  border-radius:12px;
+  background:#25d366;
+  color:#fff;
+  font-weight:700;
+  font-size:13px;
+  white-space:nowrap;
+  text-decoration:none;
+  border:0;
+}
+.mobile-cta-bar .diag-btn{
+  flex:1.3;
+  white-space:nowrap;
+  font-size:13px;
+}
+@media (max-width:680px){
+  .mobile-cta-bar{ display:flex; }
+  /* push chatbot up above sticky bar */
+  .pitahaya-chat:not(.is-open){
+    --pitahaya-chat-bottom: calc(80px + env(safe-area-inset-bottom)) !important;
+  }
+  /* extra footer space for sticky bar */
+  .footer{
+    padding-bottom:calc(130px + env(safe-area-inset-bottom)) !important;
+  }
+}
+
+/* ── Mobile content reduction ─────────────────────────────────
+   Hide sections that add too much information on small screens.
+   Keep only: hero headline+CTA, problem/solution, steps,
+   portfolio gallery, 1 testimonial, final CTA, sticky bar.
+──────────────────────────────────────────────────────────────*/
+@media (max-width:680px){
+  /* Disable reveal animations on mobile — instant content, no flicker. */
+  html.js .reveal{ opacity:1 !important; transform:none !important; transition:none !important; }
+  html.js .reveal.in{ opacity:1; transform:none; }
+  /* Hero: hide proof chips, metrics, and interactive ecosystem card */
+  .hero-proof{ display:none; }
+  .metrics{ display:none; }
+  .ecosystem-card{ display:none; }
+
+  /* Hide entire trust-band section */
+  section[aria-label="Señales de confianza"]{ display:none; }
+
+  /* Hide First Impression Lab (too interactive for mobile) */
+  #first-impression-lab{ display:none; }
+
+  /* Hide redundant stats band */
+  #resultados{ display:none; }
+
+  /* Testimonials: show only the first one */
+  .testimonial:nth-child(n+2){ display:none; }
 }

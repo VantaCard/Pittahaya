@@ -67,8 +67,13 @@ function sanitize(str, maxLen = 500) {
 
 // ── Route handlers ────────────────────────────────────────────
 
+const ALLOWED_SORT_COLS = new Set(['created_at', 'updated_at', 'name', 'email', 'status', 'priority', 'company', 'service', 'source_page']);
+
 async function getLeads(req, res) {
   const { status, priority, service, source_page, search, sort = 'created_at', order = 'desc', limit = 50, offset = 0 } = req.query;
+
+  const safeSort = ALLOWED_SORT_COLS.has(sort) ? sort : 'created_at';
+  const safeOrder = order === 'asc' ? 'asc' : 'desc';
 
   let query = supabase.from('leads').select('*', { count: 'exact' });
 
@@ -81,7 +86,7 @@ async function getLeads(req, res) {
   }
 
   query = query
-    .order(sort, { ascending: order === 'asc' })
+    .order(safeSort, { ascending: safeOrder === 'asc' })
     .range(Number(offset), Number(offset) + Number(limit) - 1);
 
   const { data, error, count } = await query;

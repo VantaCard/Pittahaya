@@ -64,14 +64,20 @@ const getClientIp = (req) => {
 };
 
 const isSameOrigin = (req) => {
-  const origin = req.headers.origin;
-  if (!origin) return true;
+  const origin  = req.headers.origin;
+  const referer = req.headers.referer || req.headers.referrer;
+  const host    = req.headers.host;
+
+  // Browsers always send Origin OR Referer for non-trivial POSTs.
+  // Missing both = curl/scripted request → reject.
+  if (!origin && !referer) return false;
 
   try {
-    return new URL(origin).host === req.headers.host;
-  } catch {
-    return false;
-  }
+    if (origin)  return new URL(origin).host === host;
+    if (referer) return new URL(referer).host === host;
+  } catch { return false; }
+
+  return false;
 };
 
 const isRateLimited = (ip) => {
@@ -197,7 +203,7 @@ const sendAdminNotification = async (lead, leadId) => {
 
   const toEmail = process.env.LEAD_TO_EMAIL || "jfmcorp@jfmcorporation.com";
   const fromEmail = process.env.LEAD_FROM_EMAIL || "Pittahaya <noreply@jfmcorporation.com>";
-  const crmUrl = `${process.env.NEXT_PUBLIC_SITE_URL || "https://pitahaya.vercel.app"}/crm/lead.html?id=${encodeURIComponent(leadId || "")}`;
+  const crmUrl = `${process.env.NEXT_PUBLIC_SITE_URL || "https://www.pittahaya.com"}/crm/lead.html?id=${encodeURIComponent(leadId || "")}`;
   const priorityLabel = { hot: "Hot", warm: "Warm", cold: "Cold" }[lead.priority] || "Cold";
 
   const safe = Object.fromEntries(Object.entries(lead).map(([key, value]) => [key, escapeHtml(value)]));
@@ -301,21 +307,18 @@ module.exports = async function handler(req, res) {
       message: "Solicitud guardada en el CRM. Te responderemos muy pronto."
     });
   } catch (error) {
-    console.error("Lead submission failed", error.message);
-    const messages = {
-      missing_supabase_config: "El CRM aun no esta configurado en Vercel. Revisa SUPABASE_URL y SUPABASE_SERVICE_KEY.",
-      invalid_supabase_url: "La URL de Supabase en Vercel no parece valida.",
-      supabase_auth_failed: "La llave de Supabase no es correcta. Usa la service_role key en SUPABASE_SERVICE_KEY.",
-      supabase_table_missing: "Falta ejecutar el schema SQL del CRM en Supabase.",
-      supabase_schema_mismatch: "El schema de Supabase no coincide con el CRM. Ejecuta el schema SQL completo."
-    };
-    const message = messages[error.message] || "No se pudo guardar la solicitud en el CRM. Intenta nuevamente.";
+    // Log full details server-side only; never leak to the client.
+    console.error("Lead submission failed", {
+      code: error.message,
+      status: error.status,
+      details: (error.details || "").slice(0, 500)
+    });
 
+    // Generic public message — no internal hints, no stack info, no env names.
     return sendJson(res, 500, {
       success: false,
       ok: false,
-      error: message,
-      error_code: error.message
+      error: "No se pudo guardar la solicitud en este momento. Por favor intenta de nuevo en unos minutos."
     });
   }
 };
